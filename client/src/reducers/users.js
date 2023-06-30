@@ -10,12 +10,25 @@ const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = user
   ? { isLoggedIn: true, user }
-  : { isLoggedIn: false, user: null };
+  : { isLoggedIn: false, user: {} };
 
 export const users = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'FETCH_PROFILE':
+      console.log(payload)
+      if (payload) {
+        return {
+          ...state,
+          isLoggedIn: true,
+          user:payload
+        }
+      }
+      return {
+        ...state,
+        user: payload
+      };
     case REGISTER_SUCCESS:
       return {
         ...state,

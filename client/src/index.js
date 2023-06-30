@@ -4,7 +4,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
 import { legacy_createStore as createStore, applyMiddleware, compose} from 'redux'
-
+import {BrowserRouter as Router} from 'react-router-dom'
 import { reducers } from './reducers';
 import thunk from 'redux-thunk'
 // Store
@@ -15,11 +15,13 @@ const store = createStore(reducers, compose(applyMiddleware(thunk)))
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Provider>
+  <Router>
+    <Provider store={store}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Provider>
+  </Router>
 );
 
 // If you want to start measuring performance in your app, pass a function

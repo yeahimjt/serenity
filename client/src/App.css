@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Fauna+One&family=Roboto&family=Vidaloka&display=swap');
+
+:root {
+    --blue: #0066FF;
+    --gray: #F5F5F5;
+    --black: #333333;
+    --alert: #FEF7E9;
+    --alert-border: #FADEB0;
+    --success: #EAF7EE;
+    --success-border: #BEE5C8;
+}

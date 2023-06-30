@@ -7,6 +7,7 @@ export const messages = (state = initialState, action) =>  {
 
   switch (type) {
     case SET_MESSAGE:
+      console.log(type,payload)
       return { message: payload };
 
     case CLEAR_MESSAGE:

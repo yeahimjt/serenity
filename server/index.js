@@ -2,17 +2,20 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import cors from 'cors'
+import dotenv from 'dotenv'
 
 import postRoutes from './routes/posts.js';
 import userRoutes from './routes/users.js'
 import cookieParser from 'cookie-parser';
+
+dotenv.config();
 const app = express();
 app.use(cookieParser())
 
-app.use(bodyParser.json({ limit: "90mb", extended: true} ));
-app.use(bodyParser.urlencoded({ limit: "90mb", extended: true} ));
+app.use(bodyParser.json({ limit: "500mb", extended: true} ));
+app.use(bodyParser.urlencoded({ limit: "500mb", extended: true} ));
 var corsOptions = {
-    origin: true,
+    origin: 'http://localhost:3000',
     methods: ['GET', 'POST'],
     credentials: true,
     exposedHeaders: ["Set-Cookie"],

@@ -2,14 +2,16 @@ import mongoose from 'mongoose'
 
 const postSchema = mongoose.Schema({
     title: String,
-    user_id: Number,
+    user_id: String,
+    full_name: String,
     message: String,
-    inspired: String,
     inspired: {
         type: Number,
         default: 0
     },
-    tag: String,
+    tags: {
+        type: [String]
+    },
     createdAt: {
         type: Date,
         default: new Date()
