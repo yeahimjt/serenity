@@ -18,6 +18,18 @@ export const getUsers = () => async (dispatch) => {
     }
 }
 
+export const getUsersPicture = async (user_id, setPicture) => {
+    try {
+        const { data } = await api.fetchUsersImage(user_id)
+        if (data) {
+            setPicture(data[0]['images']['url'])
+        }
+
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
 export const createUsers = (user) => async (dispatch) => {
     try {
         const { data } = await api.createUsers(user)

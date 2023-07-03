@@ -13,7 +13,8 @@ const Profile = () => {
         nav('/')
     }
     const [updateProfile, setUpdateProfile] = useState({full_name: '', email_address: '', image: '' })
-    const [image, setImage] = useState(null)
+    console.log(profile)
+    const [image, setImage] = useState(profile.user.source || null)
     const handleImage = (e) => {
         const file = e.target.files[0]
         setFileToBase(file)
@@ -32,20 +33,19 @@ const Profile = () => {
         e.preventDefault()
         dispatch(updateUsers(updateProfile, image))
     }
-    console.log(updateProfile)
   return (
     <div className="flex flex-col gap-4 m-base tablet:w-[70%] tablet:mx-auto">
         <div className="flex gap-8">
             <div className="flex-[0.15]">
                 {image ?
                     <label className=" rounded-full w-[150px] h-[150px] hover:bg-black/70 cursor-pointer group flex justify-center items-center" htmlFor="file">
-                        <img className="rounded-full w-[150px] h-[150px]  flex justify-center items-center object-scale-down" src={image} alt=""/>
+                        <img className="rounded-full w-[150px] h-[150px]  flex justify-center items-center object-scale-down" src={image || profile?.user.images.url} alt=""/>
                         <MdEdit className="hidden group-hover:block z-20 absolute" size={44}/>
                         <input className="hidden" type="file" name="file" id="file" onChange={handleImage}></input>
                     </label>
                 :
                 <label className="rounded-full w-[150px] h-[150px] hover:bg-black/70 cursor-pointer group flex justify-center items-center" htmlFor="file">
-                    <img className="rounded-full w-[150px] h-[150px]  flex justify-center items-center object-scale-down" src={DefaultPerson} alt=""/>
+                    <img className="rounded-full w-[150px] h-[150px]  flex justify-center items-center object-scale-down" src={profile?.user.images.url ? profile?.user.images.url : DefaultPerson} alt=""/>
                     <MdEdit className="hidden group-hover:block" size={44}/>
                     <input className="hidden" type="file" name="file" id="file" onChange={handleImage}></input>
                 </label>
@@ -78,17 +78,17 @@ const Profile = () => {
         </div>
         <hr/>
         <div className="flex gap-12 py-8">
-            <label className="flex-[0.2] font-base text-med text-[color:var(--black)]" for="full_name">Full Name</label>
+            <label className="flex-[0.2] font-base text-med text-[color:var(--black)]" htmlFor="full_name">Full Name</label>
             <input className="w-[368px] h-[53px] border-2 border-[color:var(--black)] rounded-input px-4 py-2" id="full_name" placeholder={profile ? profile?.user.full_name : ''} onChange={(e)=> setUpdateProfile({...updateProfile, full_name: e.target.value})}/>
         </div>
         <hr/>
         <div className="flex gap-12 py-8">
-            <label className="flex-[0.2] font-base text-med text-[color:var(--black)]" for="email_address">Email Address</label>
+            <label className="flex-[0.2] font-base text-med text-[color:var(--black)]" htmlFor="email_address">Email Address</label>
             <input className="w-[368px] h-[53px] border-2 border-[color:var(--black)] rounded-input px-4 py-2" id="email_address" placeholder={profile ? profile?.user.email_address : ''}/>
         </div>
         <hr/>
         <div className="flex gap-12 py-8">
-            <label className="flex-[0.2] font-base text-med text-[color:var(--black)]" for="dob">Date of Birth</label>
+            <label className="flex-[0.2] font-base text-med text-[color:var(--black)]" htmlFor="dob">Date of Birth</label>
             <input className="w-[368px] h-[53px] border-2 border-[color:var(--black)] rounded-input px-4 py-2" id="dob" type="date"/>
         </div>
         <hr/>

@@ -12,12 +12,23 @@ cloudinary.config({
 export const getUsers = async (req,res) => {
     try {
         const users = await UserData.find();
-
         res.status(200).json(users)
     } catch (error) {
         res.status(404).json({message: error.message})
         console.log(error.message)
     }
+}
+
+export const getUsersImage = async (req,res) => {
+  const { user_id } = req.body;
+  try {
+      const users = await UserData.find({_id: user_id});
+      console.log(users)
+      res.status(200).json(users)
+  } catch (error) {
+    res.status(404).json({message:error.mesage})
+    console.log(error.message)
+  }
 }
 
 export const createUsers = async (req,res) => {
@@ -30,7 +41,6 @@ export const createUsers = async (req,res) => {
       const newUser = new UserData({full_name,email_address,password});
       try {
           await newUser.save()
-          console.log(newUser)
           res.status(201).json(newUser)
       } catch (error) {
           res.status(409).json({message: error.message})
@@ -41,7 +51,6 @@ export const createUsers = async (req,res) => {
 export const updateUsers = async (req,res) => {
   const { tokenn }  = req.cookies
   const userr = jwt.verify(tokenn, process.env.SECRET_PHRASE)
-  console.log(userr)
   const {full_name, email_address,password, images,anonymous} = req.body;
     const result = await cloudinary.v2.uploader.upload(images.replace(/(\r\n|\n|\r)/gm,""), {
       folder: "serenity",
@@ -59,7 +68,6 @@ export const updateUsers = async (req,res) => {
             url: result.secure_url
           },
         })
-        console.log(user,result.public_id)
         res.status(200).send(user)
     } catch (error) {
       res.status(409).json({message: error.message})
@@ -94,7 +102,7 @@ export const loginUsers = async (req,res) => {
         httpOnly: true,
         sameSite: 'lax'
         });
-      return res.status(200).json({ user: {full_name: user.full_name, email_address: `${email_address}`} ,message: "You have successfully logged in!" });
+      return res.status(200).json({ user: {full_name: user.full_name, email_address: `${email_address}`, source: user.images.url} ,message: "You have successfully logged in!" });
     } else {
       res.status(401).send({message: 'Error'});
       // throw new Error("email or password is not valid");

@@ -14,3 +14,4 @@ export const loginUsers = (userData) => axios.post('/users/login', userData, { w
 export const profileUsers = () => axios.post('/users/profile', { withCredentials: true })
 export const logout = () => axios.post('/users/logout', { withCredentials: true })
 export const updateUsers = (userData, images) => axios.post('/users/update', {userData,images}, { withCredentials: true })
+export const fetchUsersImage = (user_id) => axios.post(url + '/users/image', {user_id}, { withCredentials: true})

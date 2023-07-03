@@ -9,11 +9,12 @@ const Stories = () => {
     useEffect(()=> {
         dispatch(getPosts())
     },[])
-    console.log(posts)
   return (
     <>
     <div>Stories</div>
-    <Story />
+    {posts && posts.map((story) =>
+      <Story story={story}/>
+    )}
     </>
   )
 }

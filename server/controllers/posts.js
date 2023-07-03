@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 export const getPosts = async (req,res) => {
     try {
         const postMessages = await PostMessage.find();
-
         res.status(200).json(postMessages)
     } catch (error) {
         res.status(404).json({message: error.message})
@@ -14,7 +13,6 @@ export const getPosts = async (req,res) => {
 
 export const createPosts = async (req,res) => {
     const {newPost, tags} = req.body;
-    console.log(req.body)
     const { tokenn }  = req.cookies
     let tag
     if (!tokenn) {
@@ -25,7 +23,6 @@ export const createPosts = async (req,res) => {
           tags.forEach(el => {if(el['value'] !== 'undefined') {tag=tag+','+el['value']}})
       }
     //   res.status(200).send(user.user)
-    console.log(user)
     const newwPost = new PostMessage({title:newPost.title,full_name: user.user.full_name, user_id:user.user.id,message:newPost.message, tags: tag});
     try {
         await newwPost.save()
