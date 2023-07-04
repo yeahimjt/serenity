@@ -14,6 +14,7 @@ import Profile from "./components/Profile";
 import Home from "./components/Home";
 import Write from "./components/Write";
 import Stories from "./components/Stories";
+import MyStories from "./components/MyStories";
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/write" element={<Write />} />
         <Route path="/stories" element={<Stories />} />
+        <Route path="/mystories" element={<MyStories />} />
       </Routes>
     </div>
   );

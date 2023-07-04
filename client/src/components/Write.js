@@ -16,6 +16,7 @@ const Write = () => {
         {value: "substance_dependence",label:"Substance Dependence"},
         {value: "eating_disorder",label:"Eating Disorder"},
         {value: "social_anxiety",label:"Social Anxiety"},
+        {value: "ptsd",label:"PTSD"},
     ]
 
     const basicSchema = yup.object().shape({
@@ -32,16 +33,16 @@ const Write = () => {
       const {
           values,
           errors,
-    touched,
-    isSubmitting,
-    handleBlur,
-    handleChange,
-    handleSubmit,
+            touched,
+            isSubmitting,
+            handleBlur,
+            handleChange,
+            handleSubmit,
     } = useFormik({
         initialValues: {
             title: "",
-        message: "",
-        tags: "",
+            message: "",
+            tags: "",
     },
     validationSchema: basicSchema,
     onSubmit,
@@ -49,6 +50,7 @@ const Write = () => {
     const handleTags = (selectedOption) => {
         setSelected(selectedOption)
     }
+    console.log(selected)
   return (
     <div className="flex flex-col gap-4 m-base tablet:w-[70%] tablet:mx-auto">
         <section>

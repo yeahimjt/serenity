@@ -17,7 +17,6 @@ export const users = (state = initialState, action) => {
 
   switch (type) {
     case 'FETCH_PROFILE':
-      console.log(payload)
       if (payload) {
         return {
           ...state,

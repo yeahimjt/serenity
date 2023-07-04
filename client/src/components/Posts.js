@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createPost } from '../actions/posts';
 
 const Posts = () => {
-    const posts = useSelector((state) => state.posts);
+
     const [postData, setPostData] = useState({ title: '', user_id: 1, message: ''})
     const dispatch = useDispatch();
     const handleSubmit = async (e) => {
       e.preventDefault()
-      dispatch(createPost(postData))
+
     }
   return (
     <div>

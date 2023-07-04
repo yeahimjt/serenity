@@ -9,13 +9,14 @@ const Stories = () => {
     useEffect(()=> {
         dispatch(getPosts())
     },[])
+    console.log(posts)
   return (
-    <>
-    <div>Stories</div>
-    {posts && posts.map((story) =>
-      <Story story={story}/>
-    )}
-    </>
+    <div className="flex justify-center gap-5 flex-wrap">
+      {posts !== [] && posts.map((story) =>
+        <Story story={story}/>
+      )}
+    </div>
+
   )
 }
 

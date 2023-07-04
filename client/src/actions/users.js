@@ -10,12 +10,12 @@ import * as api from '../api'
 
 // Action Creators
 export const getUsers = () => async (dispatch) => {
-    try {
-        const { data } = await api.fetchUsers()
-        dispatch({ type: 'FETCH_ALL', payload: data})
-    } catch (error) {
-        console.log(error.message)
-    }
+    // try {
+    //     const { data } = await api.fetchUsers()
+    //     dispatch({ type: 'FETCH_ALL_USERS', payload: data})
+    // } catch (error) {
+    //     console.log(error.message)
+    // }
 }
 
 export const getUsersPicture = async (user_id, setPicture) => {
@@ -43,8 +43,15 @@ export const createUsers = (user) => async (dispatch) => {
 }
 
 export const updateUsers = (userData, images) => async (dispatch) => {
-    const { data } = await api.updateUsers(userData, images)
-    console.log(data)
+    try {
+        const { data } = await api.updateUsers(userData, images)
+        dispatch({type: LOGIN_SUCCESS, payload: data})
+        dispatch({ type: 'SET_MESSAGE', payload: {success: 'Updated profile successfully'} })
+    } catch (error) {
+        dispatch({ type: 'SET_MESSAGE', payload: {success: 'Update profile failed'} })
+    }
+    
+    
 }
 
 export const loginUsers = (user) => async (dispatch) => {

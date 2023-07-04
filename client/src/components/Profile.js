@@ -13,7 +13,6 @@ const Profile = () => {
         nav('/')
     }
     const [updateProfile, setUpdateProfile] = useState({full_name: '', email_address: '', image: '' })
-    console.log(profile)
     const [image, setImage] = useState(profile.user.source || null)
     const handleImage = (e) => {
         const file = e.target.files[0]
@@ -45,7 +44,7 @@ const Profile = () => {
                     </label>
                 :
                 <label className="rounded-full w-[150px] h-[150px] hover:bg-black/70 cursor-pointer group flex justify-center items-center" htmlFor="file">
-                    <img className="rounded-full w-[150px] h-[150px]  flex justify-center items-center object-scale-down" src={profile?.user.images.url ? profile?.user.images.url : DefaultPerson} alt=""/>
+                    <img className="rounded-full w-[150px] h-[150px]  flex justify-center items-center object-scale-down" src={profile?.user.images ? profile?.user.images.url : DefaultPerson} alt=""/>
                     <MdEdit className="hidden group-hover:block" size={44}/>
                     <input className="hidden" type="file" name="file" id="file" onChange={handleImage}></input>
                 </label>
@@ -55,9 +54,9 @@ const Profile = () => {
             <div className="flex-[0.85]">
                 <div className="flex flex-col justify-center h-full gap-4">
                     <div className="flex justify-between">
-                        <h2 className="font-base text-med">2047<br/>Followers</h2>
-                        <h2 className="font-base text-med">1047<br/>Following</h2>
-                        <h2 className="font-base text-med">47<br/>Stories</h2>
+                        <h2 className="font-base text-med cursor-pointer">2047<br/>Followers</h2>
+                        <h2 className="font-base text-med cursor-pointer">1047<br/>Following</h2>
+                        <h2 className="font-base text-med cursor-pointer">47<br/>Stories</h2>
                     </div>
                     <div className="flex gap-4">
                         <button className="bg-[color:var(--blue)] px-8 py-1 text-white rounded-input" onClick={handleLogOut}>Log Out</button>
@@ -74,7 +73,6 @@ const Profile = () => {
             <p className="hover:underline decoration-[color:var(--blue)] underline-offset-8 cursor-pointer">My Details</p>
             <p className="hover:underline decoration-[color:var(--blue)] underline-offset-8 cursor-pointer">Profile</p>
             <p className="hover:underline decoration-[color:var(--blue)] underline-offset-8 cursor-pointer">Privacy</p>
-            <p className="hover:underline decoration-[color:var(--blue)] underline-offset-8 cursor-pointer">Stories</p>
         </div>
         <hr/>
         <div className="flex gap-12 py-8">
@@ -84,7 +82,7 @@ const Profile = () => {
         <hr/>
         <div className="flex gap-12 py-8">
             <label className="flex-[0.2] font-base text-med text-[color:var(--black)]" htmlFor="email_address">Email Address</label>
-            <input className="w-[368px] h-[53px] border-2 border-[color:var(--black)] rounded-input px-4 py-2" id="email_address" placeholder={profile ? profile?.user.email_address : ''}/>
+            <input className="w-[368px] h-[53px] border-2 border-[color:var(--black)] rounded-input px-4 py-2" id="email_address" placeholder={profile ? profile?.user.email_address : ''} onChange={(e)=> setUpdateProfile({...updateProfile, email_address: e.target.value})}/>
         </div>
         <hr/>
         <div className="flex gap-12 py-8">
