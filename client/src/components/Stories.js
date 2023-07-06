@@ -11,7 +11,7 @@ const Stories = () => {
     },[])
     console.log(posts)
   return (
-    <div className="flex justify-center gap-5 flex-wrap">
+    <div className="flex justify-center gap-5 flex-wrap mt-16 w-[95%] mx-auto">
       {posts !== [] && posts.map((story) =>
         <Story story={story}/>
       )}

@@ -15,6 +15,7 @@ import Home from "./components/Home";
 import Write from "./components/Write";
 import Stories from "./components/Stories";
 import MyStories from "./components/MyStories";
+import Read from "./components/Read";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
         <Route path="/write" element={<Write />} />
         <Route path="/stories" element={<Stories />} />
         <Route path="/mystories" element={<MyStories />} />
+        <Route path="/story/:id" element={<Read />} />
       </Routes>
     </div>
   );

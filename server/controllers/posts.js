@@ -31,6 +31,16 @@ export const deletePosts = async (req,res) => {
     }
 }
 
+export const getPostsById = async (req,res) => {
+    const { id } = req.body
+    try {
+        const posts = await PostMessage.findById({_id: id})
+        res.status(200).json(posts)
+    } catch (error) {
+        res.status(404).json({message: error.message})
+    }
+}
+
 export const getUsersPosts = async (req,res) => {
     const { tokenn } = req.cookies
     try {
@@ -43,17 +53,25 @@ export const getUsersPosts = async (req,res) => {
 }
 
 export const createPosts = async (req,res) => {
-    const {newPost, tags} = req.body;
+    const {newPost, tags, image} = req.body;
     const { tokenn }  = req.cookies
     let tag = ''
     if (!tokenn) {
       return res.sendStatus(204);
     }
-      const user = jwt.verify(tokenn, 'supersecretsuperslongpassword')
-      if (tags) {
-          tags.forEach(el => {if (tag !== '' ) {tag=tag+','+el['value']} else {tag = el['value']}})
-      }
-    const newwPost = new PostMessage({title:newPost.title,full_name: user.user.full_name, user_id:user.user.id,message:newPost.message, tags: tag, createdAt: new Date()});
+    if (tags) {
+        tags.forEach(el => {if (tag !== '' ) {tag=tag+','+el['value']} else {tag = el['value']}})
+    }
+    const user = jwt.verify(tokenn, 'supersecretsuperslongpassword')
+    let result
+    if (image) {
+        result = await cloudinary.v2.uploader.upload(image.replace(/(\r\n|\n|\r)/gm,""), {
+            folder: "serenity",
+            width: 500,
+            crop: "scale"
+        })
+    }
+    const newwPost = new PostMessage({title:newPost.title,full_name: user.user.full_name, user_id:user.user.id,message:newPost.message, tags: tag, createdAt: new Date(), images: {public_id: result.public_id, url: result.secure_url}});
     try {
         await newwPost.save()
         res.status(201).json(newwPost)
@@ -92,7 +110,7 @@ export const updatePosts = async (req,res) => {
                 public_id: (result?result.public_id:null) || post.images.public_id,
                 url: (result?result.secure_url:null) || post.images.url
               }
-            post.status = status.value || post.status
+            post.status = (status? status.value : null) || post.status
             post.tags = tags || post.tags
 
 

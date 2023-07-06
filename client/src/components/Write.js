@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import * as yup from "yup"
 import { createPost } from '../actions/posts';
+import { MdPhotoCamera } from 'react-icons/md';
 
 const animatedComponents = makeAnimated();
 
@@ -26,7 +27,7 @@ const Write = () => {
     const dispatch = useDispatch()
     const [selected, setSelected] = useState(null)
     const onSubmit = async (values, actions) => {
-        dispatch(createPost(values, selected))
+        dispatch(createPost(values, selected, image))
         await new Promise((resolve) => setTimeout(resolve, 1000));
         actions.resetForm();
       };
@@ -50,7 +51,19 @@ const Write = () => {
     const handleTags = (selectedOption) => {
         setSelected(selectedOption)
     }
-    console.log(selected)
+    const [image, setImage] = useState(null)
+    const handleImage = (e) => {
+        const file = e.target.files[0]
+        setFileToBase(file)
+        // setImage(file.name)
+    }
+    const setFileToBase = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file)
+        reader.onloadend = () => {
+            setImage(reader.result)
+        }
+    }
   return (
     <div className="flex flex-col gap-4 m-base tablet:w-[70%] tablet:mx-auto">
         <section>
@@ -90,6 +103,8 @@ const Write = () => {
         onChange={handleTags}
         />
         {errors.tags && touched.tags && <p className="text-red-500">{errors.tags}</p>}
+        <label className="flex gap-2 items-center rounded-full border-2 w-fit px-4 mt-4" htmlFor="file"> <MdPhotoCamera size={18}/> <p>Upload Photo</p></label>
+        <input className="" type="file" id="file" onChange={handleImage}></input>
         <button className="bg-[color:var(--blue)] w-[210px] h-[31px] rounded-input text-white my-4" type="submit">Submit Story</button>
         </form>
     </div>
