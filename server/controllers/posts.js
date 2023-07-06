@@ -1,5 +1,11 @@
 import PostMessage from '../models/postMessage.js';
 import jwt from 'jsonwebtoken';
+import * as cloudinary from 'cloudinary'
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_KEY,
+    api_secret: process.env.CLOUD_KEY_SECRET,
+})
 
 export const getPosts = async (req,res) => {
     try {
@@ -54,4 +60,51 @@ export const createPosts = async (req,res) => {
     } catch (error) {
         res.status(409).json({message: error.message})
     }
+}
+
+export const updatePosts = async (req,res) => {
+    const {post_id, updateFields, image, status, tagsSelected} = req.body;
+    const { tokenn } = req.cookies
+    
+    if (!tokenn) {
+        return res.sendStatus(204);
+    }
+    
+    let tags = ''
+    if (tagsSelected) {
+        tagsSelected.forEach(el => {if (tags !== '' ) {tags=tags+','+el['value']} else {tags = el['value']}})
+    }
+    let result
+    if (image) {
+        result = await cloudinary.v2.uploader.upload(image.replace(/(\r\n|\n|\r)/gm,""), {
+            folder: "serenity",
+            width: 500,
+            crop: "scale"
+        })
+    }
+    try {
+        const user = jwt.verify(tokenn, 'supersecretsuperslongpassword')
+        const post = await PostMessage.findById({_id: post_id})
+        if (post) {
+            post.title = updateFields.title || post.title
+            post.message = updateFields.message || post.message
+            post.images = {
+                public_id: (result?result.public_id:null) || post.images.public_id,
+                url: (result?result.secure_url:null) || post.images.url
+              }
+            post.status = status.value || post.status
+            post.tags = tags || post.tags
+
+
+            const updatedPost = await post.save()
+            const posts = await PostMessage.find({user_id: post.user_id})
+            res.status(200).json(posts)
+        }
+    
+    } catch (error) {
+        res.status(409).json({message: error.message})
+    }
+
+    
+
 }

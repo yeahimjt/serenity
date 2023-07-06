@@ -16,6 +16,18 @@ const postSchema = mongoose.Schema({
         type: Date,
         default: new Date()
     },
+    images: {
+        public_id: {
+            type: String,
+        },
+        url: {
+            type: String,
+        }
+    },
+    status: {
+        type: String,
+        default: 'Active'
+    }
 })
 
 const PostMessage = mongoose.model('PostMessage', postSchema)

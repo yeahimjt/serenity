@@ -21,6 +21,17 @@ export const createPost = (post, tags) => async (dispatch) => {
     }
 }
 
+export const updatePost = async (post_id, updateFields, image, status, tagsSelected, setPosts) =>  {
+    try {
+        const { data } = await api.updatePosts(post_id, updateFields, image, status, tagsSelected)
+        if (data) {
+            setPosts(data)
+        }
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
 export const usersPosts = async (user_id, setFilterText) =>  {
     try {
         const { data } = await api.usersPosts(user_id)

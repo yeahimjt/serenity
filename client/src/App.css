@@ -13,3 +13,7 @@
     --success: #EAF7EE;
     --success-border: #BEE5C8;
 }
+
+input[type="file"] {
+    display:none;
+}
