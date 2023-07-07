@@ -15,7 +15,10 @@ const Nav = () => {
         <Link className="text-[color:var(--blue)] font-important text-big" to='/'>Serenity Spirit</Link>
         <hr className='rotate-180 border-[1px] border-[color:var(--black)] h-full'/>
         <Link className="text-med" to="/stories">Stories</Link>
-        <Link className="text-med" to="/community">Community</Link>
+        <Link className="text-med" to="/stories">Timeline</Link>
+        <Link className="text-med" to="/stories">Creators</Link>
+        <Link className="text-med" to="/stories">Resources</Link>
+        <input className="border-2 rounded-input p-2 w-[480px]"/>
       </div>
       <div className="flex items-center gap-8 text-med ">
         <Link className="flex gap-2 items-center" to="/write"><BsPencilSquare size={20}/>Write</Link>

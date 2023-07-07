@@ -1,5 +1,5 @@
 import express from 'express';
-import {getPosts, createPosts, getUsersPosts, deletePosts, updatePosts, getPostsById} from '../controllers/posts.js'
+import {getPosts, createPosts, getUsersPosts, deletePosts, updatePosts, getPostsById, getPostsByInspired} from '../controllers/posts.js'
 const router = express.Router();
 
 router.get('/', getPosts)
@@ -9,4 +9,5 @@ router.post('/delete', deletePosts)
 router.post('/update', updatePosts)
 router.post('/id', getPostsById)
 
+router.get('/inspired', getPostsByInspired)
 export default router

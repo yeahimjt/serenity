@@ -10,7 +10,6 @@ cloudinary.config({
 export const getPosts = async (req,res) => {
     try {
         const postMessages = await PostMessage.find();
-        console.log(postMessages)
         res.status(200).json(postMessages)
     } catch (error) {
         res.status(404).json({message: error.message})
@@ -38,6 +37,16 @@ export const getPostsById = async (req,res) => {
         res.status(200).json(posts)
     } catch (error) {
         res.status(404).json({message: error.message})
+    }
+}
+
+export const getPostsByInspired = async (req,res) => {
+    try {
+        const mostInspired = await PostMessage.find({}).sort({"inspired":-1}).limit(5)
+        console.log(mostInspired)
+        res.status(200).send(mostInspired)
+    } catch (error) {
+        res.status(404).send({message: error.message})
     }
 }
 

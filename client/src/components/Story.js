@@ -18,7 +18,7 @@ const Story = ({story}) => {
   }
 
   return (
-    <div className="flex flex-col tablet:max-w-[325px] tablet:h-[458px] hover:scale-[1.01] cursor-pointer" onClick={() => nav(`/story/${story._id}`)}>
+    <div className="flex flex-col tablet:max-w-[325px] tablet:h-[458px] my-4 tablet:my-0 hover:scale-[1.01] cursor-pointer transition-all" onClick={() => nav(`/story/${story._id}`)}>
       {story.images ? 
           <div className="flex-[0.45] h-full w-full bg-[color:var(--gray)] rounded-general">
             <img className="rounded-general h-[206.59px] w-full object-cover" src={story.images.url} alt=""/>
@@ -34,15 +34,15 @@ const Story = ({story}) => {
                 <img className="w-[35px] h-[35px] rounded-full" src={picture} alt=""/>
               }
               <div className="flex gap-2 items-center">
-                <p className="font-base text-base">{story.full_name.split(" ") > 2 ? story.full_name.split(" ")[0] + ' ' +  story.full_name.split(" ")[2][0] + '.' : story.full_name.split(" ")[0] + ' ' + story.full_name.split(" ")[1][0] + '.'}</p>
+                <p className="font-base text-base text-gray-500">{story.full_name.split(" ") > 2 ? story.full_name.split(" ")[0] + ' ' +  story.full_name.split(" ")[2][0] + '.' : story.full_name.split(" ")[0] + ' ' + story.full_name.split(" ")[1][0] + '.'}</p>
               </div>
-              <p className="font-base text-base">&#x2022;</p>
-              <p className="font-base text-base">{timeSince(new Date(story.createdAt))}</p>
+              <p className="font-base text-base text-gray-500">&#x2022;</p>
+              <p className="font-base text-base text-gray-500">{timeSince(new Date(story.createdAt))}</p>
             </section>
             <section className="pt-2 flex flex-col gap-2">
               <h1 className="h-[60px] font-important text-med line-clamp-2 overflow-hidden">{story.title}</h1>
               <p className="h-[99px] font-base text-base line-clamp-4 overflow-hidden">{story.message}</p>
-              <p className="flex-[1] font-base text-base overflow-hidden">{readingTime(story.message)} minute reading time</p>
+              <p className="flex-[1] font-base text-base overflow-hidden text-gray-500">{readingTime(story.message)} minute read</p>
             </section>
           <hr className="pt-4 tablet:hidden"/>
           </div>

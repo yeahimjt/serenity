@@ -20,6 +20,16 @@ export const getPostsById = async (id, setPost) => {
     }
 }
 
+export const getPostsByInspired = async (setInspired) => {
+    try {
+        const { data } = await api.postsInspired()
+        console.log(data)
+        setInspired(data)
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
 export const createPost = (post, tags, image) => async (dispatch) => {
     try {
         const { data } = await api.createPost(post, tags, image)
