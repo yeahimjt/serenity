@@ -17,17 +17,136 @@ export const getUsers = async (req,res) => {
         res.status(404).json({message: error.message})
 
     }
+    
+}
+
+export const getUsersSecretly = async (req,res) => {
+  const { id } = req.body
+  const { tokenn } = req.cookies
+  let currentUser
+  if (tokenn) {
+    currentUser = jwt.verify(tokenn, process.env.SECRET_PHRASE)
+  }
+  try {
+    const user = await UserData.findById({_id: id}, {password: 0, _id: 0, });
+    res.status(200).send(user)
+  } catch (error) {
+    
+  }
 }
 
 export const getUsersImage = async (req,res) => {
   const { user_id } = req.body;
   try {
       const users = await UserData.find({_id: user_id});
-
       res.status(200).json(users)
   } catch (error) {
     res.status(404).json({message:error.mesage})
     console.log(error.message)
+  }
+}
+
+export const followUser = async (req,res) => {
+  const {id} = req.body
+  const {tokenn} = req.cookies
+  if (!tokenn) {
+    return res.status(404).send({message: "You must be logged in."})
+  }
+  try {
+
+    // Get currently logged in profile by accessing cookie data for user_id
+    const me = jwt.verify(tokenn, process.env.SECRET_PHRASE)
+    const user = await UserData.findById({_id: me.user.id})
+
+
+    // Get user following/unfollowing from to update their follower list later
+    const other = await UserData.findById({_id: id})
+
+    // Check if user attemping to follow is already followed or not, if not follow them, else unfollow. (Do the same for the account being followed/unfollowed with the users id)
+    if (!user.follow_list.user_id.includes(id)) {
+      user.follow_list.user_id.push(id)
+      other.follower_list.user_id.push(me.user.id) // Update user following/unfollowing from's follower list
+      const updated = await user.save()
+      const otherUpdated = await other.save()
+      console.log('in not following yet')
+
+      res.clearCookie("tokenn")
+      const accessToken = jwt.sign(
+        {
+          user: {
+            email_address: user.email_address,
+            full_name: user.full_name,
+            id: user.id,
+            source: user.images.url,
+            follow_list: {
+              user_id: user.follow_list.user_id
+            },
+            follower_list: {
+              user_id: user.follower_list.user_id
+            }
+          },
+        },
+        process.env.SECRET_PHRASE
+      );
+      res.cookie('tokenn', accessToken,{
+        // maxAge: 60*60*24*3,
+        // expires works the same as the maxAge
+        expires: new Date('8 12 2023'),
+
+        //CHANGE TO TRUE THAT IS WHAT IT SHULD BE I THINK
+        secure: false,
+        httpOnly: true,
+        sameSite: 'lax'
+        });
+
+      return res.status(200).json({ user: {full_name: user.full_name, email_address: user.email_address, source: user.images.url, id: user._id, follow_list: {user_id: user.follow_list.user_id}, follower_list: {user_id: user.follower_list.user_id}} ,message: "You have successfully followed!" });
+
+    }
+
+    else {
+      const updated = await UserData.updateOne({_id: me.user.id}, {$pull: {'follow_list.user_id': id}})
+      const otherUpdated = await UserData.updateOne({_id: id}, {$pull: {'follower_list.user_id': me.user.id}})
+
+      // Now that they are updated find our users account to send back
+      const currentUser = await UserData.findById({_id: me.user.id})
+
+      res.clearCookie("tokenn")
+      const accessToken = jwt.sign(
+        {
+          user: {
+            email_address: user.email_address,
+            full_name: user.full_name,
+            id: user.id,
+            source: user.images.url,
+            follow_list: {
+              user_id: currentUser.follow_list.user_id
+            },
+            follower_list: {
+              user_id: currentUser.follower_list.user_id
+            }
+          },
+        },
+        process.env.SECRET_PHRASE
+      );
+      res.cookie('tokenn', accessToken,{
+        // maxAge: 60*60*24*3,
+        // expires works the same as the maxAge
+        expires: new Date('8 12 2023'),
+
+        //CHANGE TO TRUE THAT IS WHAT IT SHULD BE I THINK
+        secure: false,
+        httpOnly: true,
+        sameSite: 'lax'
+        });
+
+        
+        console.log('the else statement',currentUser)
+      return res.status(200).json({ user: {full_name: user.full_name, email_address: user.email_address, source: user.images.url, id: user._id, follow_list: {user_id: currentUser.follow_list.user_id}, follower_list: {user_id: currentUser.follower_list.user_id}} ,message: "You have succesfully unfollowed!" });
+
+    }
+
+  } catch (error) {
+    res.status(404).json({message: error.message})
   }
 }
 
@@ -77,15 +196,21 @@ export const updateUsers = async (req,res) => {
 
       const accessToken = jwt.sign(
         {
-            user: {
-            email_address: updated.email_address,
-            full_name: updated.full_name,
-            id: updated.id,
-            source: updated.images.url
+          user: {
+            email_address: user.email_address,
+            full_name: user.full_name,
+            id: user.id,
+            source: user.images.url,
+            follow_list: {
+              user_id: user.follow_list.user_id
             },
+            follower_list: {
+              user_id: user.follower_list.user_id
+            }
+          },
         },
-        'supersecretsuperslongpassword'
-      )
+        process.env.SECRET_PHRASE
+      );
       res.cookie('tokenn', accessToken,{
         // maxAge: 60*60*24*3,
         // expires works the same as the maxAge
@@ -96,7 +221,7 @@ export const updateUsers = async (req,res) => {
         httpOnly: true,
         sameSite: 'lax'
         });
-      return res.status(200).send({ user: {full_name: updated.full_name, email_address: updated.email_address, source: updated.images.url, id: updated._id} ,message: "You have successfully updated!" })
+      return res.status(200).send({ user: {full_name: updated.full_name, email_address: updated.email_address, source: updated.images.url, id: updated._id, follow_list: {user_id: user.follow_list.user_id}, follower_list: {user_id: user.follower_list.user_id}} ,message: "You have successfully updated!" })
     }
   } catch (error) {
     res.status(409).json({message: error.message})
@@ -118,10 +243,16 @@ export const loginUsers = async (req,res) => {
             email_address: user.email_address,
             full_name: user.full_name,
             id: user.id,
-            source: user.images.url
+            source: user.images.url,
+            follow_list: {
+              user_id: user.follow_list.user_id
+            },
+            follower_list: {
+              user_id: user.follower_list.user_id
+            }
           },
         },
-        'supersecretsuperslongpassword'
+        process.env.SECRET_PHRASE
       );
       res.cookie('tokenn', accessToken,{
         // maxAge: 60*60*24*3,
@@ -133,7 +264,7 @@ export const loginUsers = async (req,res) => {
         httpOnly: true,
         sameSite: 'lax'
         });
-      return res.status(200).json({ user: {full_name: user.full_name, email_address: `${email_address}`, source: user.images.url, id: user._id} ,message: "You have successfully logged in!" });
+      return res.status(200).json({ user: {full_name: user.full_name, email_address: `${email_address}`, source: user.images.url, id: user._id, follow_list: {user_id: user.follow_list.user_id}, follower_list: {user_id: user.follower_list.user_id}} ,message: "You have successfully logged in!" });
     } else {
       res.status(401).send({message: 'Error'});
       // throw new Error("email or password is not valid");
@@ -147,6 +278,7 @@ const { tokenn }  = req.cookies
   }
   try {
     const user = jwt.verify(tokenn, process.env.SECRET_PHRASE)
+    console.log(user.user)
     res.status(200).send(user.user)
   } catch (error) {
     return res.sendStatus(204)

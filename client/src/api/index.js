@@ -19,3 +19,5 @@ export const profileUsers = () => axios.post('/users/profile', { withCredentials
 export const logout = () => axios.post('/users/logout', { withCredentials: true })
 export const updateUsers = (userData, images) => axios.post('/users/update', {userData,images}, { withCredentials: true })
 export const fetchUsersImage = (user_id) => axios.post(url + '/users/image', {user_id}, { withCredentials: true})
+export const getUserSecretly = (id) => axios.post(url + '/users/secret', {id}, {withCredentials: true})
+export const followUser = (id) => axios.post(url + '/users/follow', {id}, {withCredentials: true})

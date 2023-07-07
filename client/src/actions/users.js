@@ -18,6 +18,31 @@ export const getUsers = () => async (dispatch) => {
     // }
 }
 
+export const getUserSecretly = async (id, setUser) => {
+    try {
+        const { data } = await api.getUserSecretly(id)
+        setUser(data)
+    } catch (error) {
+        
+    }
+}
+
+export const followUser =  (id, option) => async (dispatch) => {
+    try {
+        const { data } = await api.followUser(id)
+        console.log(data)
+        dispatch({type: LOGIN_SUCCESS, payload: data})
+        if (option) {
+            dispatch({type: 'SET_MESSAGE', payload: {success: "Successfully Unfollowed User"}})
+        }
+        else {
+            dispatch({type: 'SET_MESSAGE', payload: {success: "Successfully Followed User"}})
+        }
+    } catch (error) {
+        
+    }
+}
+
 export const getUsersPicture = async (user_id, setPicture) => {
     try {
         const { data } = await api.fetchUsersImage(user_id)

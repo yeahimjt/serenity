@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logOut, updateUsers } from '../actions/users'
@@ -13,7 +13,7 @@ const Profile = () => {
         nav('/')
     }
     const [updateProfile, setUpdateProfile] = useState({full_name: '', email_address: '', image: '' })
-    const [image, setImage] = useState(profile.user.source || null)
+    const [image, setImage] = useState(null)
     const handleImage = (e) => {
         const file = e.target.files[0]
         setFileToBase(file)
@@ -23,22 +23,27 @@ const Profile = () => {
         const reader = new FileReader();
         reader.readAsDataURL(file)
         reader.onloadend = () => {
-            console.log(reader)
             setImage(reader.result)
-            console.log(image)
         }
     }
+    console.log(profile)
+    // (Handling refresh image error), also for initial load, grab user image and set it if existing
+    useEffect(()=> {
+        setImage(profile?.user.source)
+    },[profile])
     const onSubmit = (e) => {
         e.preventDefault()
         dispatch(updateUsers(updateProfile, image))
     }
+
+    console.log(image)
   return (
     <div className="flex flex-col gap-4 m-base tablet:w-[70%] tablet:mx-auto">
         <div className="flex gap-8">
             <div className="flex-[0.15]">
                 {image ?
                     <label className=" rounded-full w-[150px] h-[150px] hover:bg-black/70 cursor-pointer group flex justify-center items-center" htmlFor="file">
-                        <img className="rounded-full w-[150px] h-[150px]  flex justify-center items-center object-scale-down" src={image || profile?.user.images.url} alt=""/>
+                        <img className="rounded-full w-[150px] h-[150px]  flex justify-center items-center object-scale-down" src={image || profile?.user?.images.url} alt=""/>
                         <MdEdit className="hidden group-hover:block z-20 absolute" size={44}/>
                         <input className="hidden" type="file" name="file" id="file" onChange={handleImage}></input>
                     </label>
@@ -54,9 +59,17 @@ const Profile = () => {
             <div className="flex-[0.85]">
                 <div className="flex flex-col justify-center h-full gap-4">
                     <div className="flex justify-between">
-                        <h2 className="font-base text-med cursor-pointer">2047<br/>Followers</h2>
-                        <h2 className="font-base text-med cursor-pointer">1047<br/>Following</h2>
-                        <h2 className="font-base text-med cursor-pointer">47<br/>Stories</h2>
+                        {profile?.user.follower_list ?
+                        <h2 className="font-base text-med cursor-pointer">{profile?.user.follower_list.user_id.length || 0}<br/>Followers</h2>
+                        :
+                        <h2 className="font-base text-med cursor-pointer">0<br/>Followers</h2>
+                        }
+                        {profile?.user.follow_list ?
+                        <h2 className="font-base text-med cursor-pointer">{profile?.user.follow_list.user_id.length || 0}<br/>Following</h2>
+                        :
+                        <h2 className="font-base text-med cursor-pointer">0<br/>Following</h2>
+                        }
+                    <h2 className="font-base text-med cursor-pointer">47<br/>Stories</h2>
                     </div>
                     <div className="flex gap-4">
                         <button className="bg-[color:var(--blue)] px-8 py-1 text-white rounded-input" onClick={handleLogOut}>Log Out</button>

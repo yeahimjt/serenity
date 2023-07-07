@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { getPostsById } from '../actions/posts'
 import { getUsersPicture } from '../actions/users'
 import { timeSince } from '../functions/TimeSince'
@@ -8,6 +8,7 @@ const Read = () => {
     const {id} = useParams()
     const [post, setPost] = useState(null)
     const [picture, setPicture] = useState(null)
+    const nav = useNavigate()
     useEffect(() => {
         getPostsById(id, setPost)
     },[])
@@ -18,7 +19,7 @@ const Read = () => {
     <div className="flex flex-col w-[85%] mx-auto my-16 gap-4">
         <div className="flex justify-between items-end flex-wrap">
         <h1 className="font-important text-big w-[65%]">{post?.title}</h1>
-            <section className="flex gap-2 justify-center items-center mt-2 hover:bg-[color:var(--gray)] rounded-full cursor-pointer p-4">
+            <section className="flex gap-2 justify-center items-center mt-2 hover:bg-[color:var(--gray)] rounded-full cursor-pointer p-4" onClick={()=> nav(`/profile/${post.user_id}`)}>
             {picture &&
                     <img className="w-[35px] h-[35px] rounded-full" src={picture} alt=""/>
             }

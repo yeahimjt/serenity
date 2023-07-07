@@ -16,6 +16,7 @@ import Write from "./components/Write";
 import Stories from "./components/Stories";
 import MyStories from "./components/MyStories";
 import Read from "./components/Read";
+import ReadProfile from "./components/ReadProfile";
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
         <Route path="/stories" element={<Stories />} />
         <Route path="/mystories" element={<MyStories />} />
         <Route path="/story/:id" element={<Read />} />
+        <Route path="/profile/:id" element={<ReadProfile />} />
       </Routes>
     </div>
   );

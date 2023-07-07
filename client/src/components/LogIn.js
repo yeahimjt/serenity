@@ -42,14 +42,7 @@ const LogIn = () => {
   });
 
   useEffect(()=> {
-    if (alert.message) {
-      console.log(alert.message.success)
-      // if (alert.message.success.includes('in')) {
-      console.log(alert.message.success)
 
-        nav('/')
-      // }
-    }
   },[alert])
 
   return (

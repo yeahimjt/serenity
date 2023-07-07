@@ -9,18 +9,27 @@ const Story = ({story}) => {
   useEffect(()=> {
     getUsersPicture(story?.user_id,setPicture)
   },[story])
+  function readingTime(text) {
+    const wpm = 255;
+    const words = text.trim().split(/\s+/).length;
+    const time = Math.ceil(words / wpm);
+    console.log(time)
+    return time
+  }
+
   return (
-    <div className="flex flex-col max-w-[325px] h-[428px] hover:scale-[1.01] cursor-pointer" onClick={() => nav(`/story/${story._id}`)}>
+    <div className="flex flex-col tablet:max-w-[325px] tablet:h-[458px] hover:scale-[1.01] cursor-pointer" onClick={() => nav(`/story/${story._id}`)}>
       {story.images ? 
           <div className="flex-[0.45] h-full w-full bg-[color:var(--gray)] rounded-general">
-          <img className="rounded-general h-[192.59px] w-full object-cover" src={story.images.url} alt=""/>
+            <img className="rounded-general h-[206.59px] w-full object-cover" src={story.images.url} alt=""/>
           </div>
         :
-          <div className="flex-[0.45] h-full w-full bg-[color:var(--gray)] rounded-general">
+          <div className="flex-[0.45] w-full h-[206.09px] bg-[color:var(--gray)] rounded-general">
+
           </div>
         }
-          <div className="flex-[0.55] text-ellipsis mx-6 gap-2">
-            <section className="flex gap-2 justify-center items-center mt-2 hover:bg-[color:var(--gray)] rounded-full cursor-pointer">
+          <div className="flex-[0.55] text-ellipsis mx-6 gap-2 z-20">
+            <section className="flex gap-2 justify-evenly items-center mt-2 hover:bg-[color:var(--gray)] rounded-full cursor-pointer" onClick={() => nav(`/profile/${story.user_id}`)}>
               {picture &&
                 <img className="w-[35px] h-[35px] rounded-full" src={picture} alt=""/>
               }
@@ -33,9 +42,10 @@ const Story = ({story}) => {
             <section className="pt-2 flex flex-col gap-2">
               <h1 className="h-[60px] font-important text-med line-clamp-2 overflow-hidden">{story.title}</h1>
               <p className="h-[99px] font-base text-base line-clamp-4 overflow-hidden">{story.message}</p>
+              <p className="flex-[1] font-base text-base overflow-hidden">{readingTime(story.message)} minute reading time</p>
             </section>
+          <hr className="pt-4 tablet:hidden"/>
           </div>
-
     </div>
   )
 }

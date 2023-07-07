@@ -4,7 +4,10 @@ const userSchema = mongoose.Schema({
     full_name: String,
     email_address: String,
     password: String,
-    anonymous: Boolean,
+    anonymous:{
+        type: Boolean,
+        default: false
+    },
     images: {
         public_id: {
             type: String,
@@ -25,11 +28,20 @@ const userSchema = mongoose.Schema({
         type: Number,
         default: 0,
     },
-
     createdAt: {
         type: Date,
         default: new Date()
     },
+    follow_list: {
+        user_id: {
+            type: [String]
+        }
+    },
+    follower_list: {
+        user_id: {
+            type: [String]
+        }
+    }
 }, {collection: 'userdata'})
 
 const UserData = mongoose.model('UserData', userSchema)
