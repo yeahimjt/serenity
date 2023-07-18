@@ -26,7 +26,6 @@ const Profile = () => {
             setImage(reader.result)
         }
     }
-    console.log(profile)
     // (Handling refresh image error), also for initial load, grab user image and set it if existing
     useEffect(()=> {
         setImage(profile?.user.source)
@@ -36,9 +35,8 @@ const Profile = () => {
         dispatch(updateUsers(updateProfile, image))
     }
 
-    console.log(image)
   return (
-    <div className="flex flex-col gap-4 m-base tablet:w-[70%] tablet:mx-auto">
+    <div className="flex flex-col gap-4 m-base tablet:w-[70%] tablet:mx-auto h-screen">
         <div className="flex gap-8">
             <div className="flex-[0.15]">
                 {image ?
@@ -69,7 +67,7 @@ const Profile = () => {
                         :
                         <h2 className="font-base text-med cursor-pointer">0<br/>Following</h2>
                         }
-                    <h2 className="font-base text-med cursor-pointer">47<br/>Stories</h2>
+                    <h2 className="font-base text-med cursor-pointer" onClick={()=>nav(`/mystories`)}>{profile?.user.stories || 0}<br/>Stories</h2>
                     </div>
                     <div className="flex gap-4">
                         <button className="bg-[color:var(--blue)] px-8 py-1 text-white rounded-input" onClick={handleLogOut}>Log Out</button>

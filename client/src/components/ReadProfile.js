@@ -12,6 +12,7 @@ const ReadUser = () => {
     const [user, setUser] = useState(null)
     const [filterText, setFilterText] = useState(null)
     const [following, setFollowing] = useState(null)
+    console.log(id)
     useEffect(()=> {
         getUserSecretly(id, setUser)
         usersPosts(id, setFilterText)
@@ -35,8 +36,9 @@ const ReadUser = () => {
             dispatch(followUser(id, (log_user?.user.follow_list.user_id.includes(id) ? true : false)))
         }
     }
+    console.log(filterText)
   return (
-    <div className="flex flex-col gap-4 m-base tablet:w-[70%] tablet:mx-auto">
+    <div className="flex flex-col gap-4 m-base tablet:w-[70%] tablet:mx-auto h-screen">
         <div className="flex gap-8">
             <div className="flex-[0.25]">
                 <img className="rounded-full w-[150px] h-[150px]  flex justify-center items-center object-scale-down" src={user?.images ? user?.images.url : DefaultPerson} alt=""/>                
@@ -54,7 +56,7 @@ const ReadUser = () => {
                         :
                         <h2 className="font-base text-med cursor-pointer">0<br/>Following</h2>
                         }
-                        <h2 className="font-base text-med cursor-pointer">47<br/>Stories</h2>
+                        <h2 className="font-base text-med cursor-pointer">{user?.stories}<br/>Stories</h2>
 
                     </div>
                     <div className="flex gap-4">

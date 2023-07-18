@@ -3,6 +3,7 @@ import dotenv from 'dotenv/config'
 import jwt from 'jsonwebtoken';
 import bcrypt from "bcryptjs";
 import * as cloudinary from 'cloudinary'
+
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.CLOUD_KEY,
@@ -15,10 +16,38 @@ export const getUsers = async (req,res) => {
         res.status(200).json(users)
     } catch (error) {
         res.status(404).json({message: error.message})
-
     }
     
 }
+
+export const getUsersFiltered = async (req,res) => {
+  const { filter } = req.body
+  try {
+    let users
+    if (filter === 'inspiring')  {
+      users = await UserData.aggregate([
+        {
+            $addFields: { "follow_list.user_id": {$size: { "$ifNull": [ "$answers", [] ] } }}
+        }, 
+        {   
+            $sort: {"follower_list.user_id":-1} 
+        }
+    ])
+      
+    }
+    else if (filter === 'recent') {
+      users = await UserData.find().sort({"createdAt": -1})
+    }
+    else if (filter === 'stories') {
+      users = await UserData.find().sort({"stories":-1})
+    }
+    res.status(200).send(users)
+  } catch (error) {
+    res.status(404).json({message: error.message})
+  }
+}
+
+
 
 export const getUsersSecretly = async (req,res) => {
   const { id } = req.body
@@ -46,6 +75,22 @@ export const getUsersImage = async (req,res) => {
   }
 }
 
+export const searchUsers = async (req,res) => {
+  const {search} = req.body;
+  try {
+    const users = await UserData.find({"full_name": {'$regex': search, '$options': 'i'}}, {password: 0})
+    if (users) {
+      res.status(200).send(users)
+    }
+    else {
+      res.status(200).send({users: null})
+    }
+    
+  } catch (error) {
+    res.status(404).json({message:error.mesage})
+  }
+}
+
 export const followUser = async (req,res) => {
   const {id} = req.body
   const {tokenn} = req.cookies
@@ -68,7 +113,6 @@ export const followUser = async (req,res) => {
       other.follower_list.user_id.push(me.user.id) // Update user following/unfollowing from's follower list
       const updated = await user.save()
       const otherUpdated = await other.save()
-      console.log('in not following yet')
 
       res.clearCookie("tokenn")
       const accessToken = jwt.sign(
@@ -83,7 +127,8 @@ export const followUser = async (req,res) => {
             },
             follower_list: {
               user_id: user.follower_list.user_id
-            }
+            },
+            stories: user.stories
           },
         },
         process.env.SECRET_PHRASE
@@ -91,7 +136,7 @@ export const followUser = async (req,res) => {
       res.cookie('tokenn', accessToken,{
         // maxAge: 60*60*24*3,
         // expires works the same as the maxAge
-        expires: new Date('8 12 2023'),
+        expires: new Date('8 30 2023'),
 
         //CHANGE TO TRUE THAT IS WHAT IT SHULD BE I THINK
         secure: false,
@@ -99,7 +144,7 @@ export const followUser = async (req,res) => {
         sameSite: 'lax'
         });
 
-      return res.status(200).json({ user: {full_name: user.full_name, email_address: user.email_address, source: user.images.url, id: user._id, follow_list: {user_id: user.follow_list.user_id}, follower_list: {user_id: user.follower_list.user_id}} ,message: "You have successfully followed!" });
+      return res.status(200).json({ user: {full_name: user.full_name, email_address: user.email_address, source: user.images.url, id: user._id, follow_list: {user_id: user.follow_list.user_id}, follower_list: {user_id: user.follower_list.user_id}, stories: user.stories} ,message: "You have successfully followed!" });
 
     }
 
@@ -123,7 +168,8 @@ export const followUser = async (req,res) => {
             },
             follower_list: {
               user_id: currentUser.follower_list.user_id
-            }
+            },
+            stories: user.stories
           },
         },
         process.env.SECRET_PHRASE
@@ -139,9 +185,8 @@ export const followUser = async (req,res) => {
         sameSite: 'lax'
         });
 
-        
-        console.log('the else statement',currentUser)
-      return res.status(200).json({ user: {full_name: user.full_name, email_address: user.email_address, source: user.images.url, id: user._id, follow_list: {user_id: currentUser.follow_list.user_id}, follower_list: {user_id: currentUser.follower_list.user_id}} ,message: "You have succesfully unfollowed!" });
+      
+      return res.status(200).json({ user: {full_name: user.full_name, email_address: user.email_address, source: user.images.url, id: user._id, follow_list: {user_id: currentUser.follow_list.user_id}, follower_list: {user_id: currentUser.follower_list.user_id},stories: user.stories} ,message: "You have succesfully unfollowed!" });
 
     }
 
@@ -206,7 +251,8 @@ export const updateUsers = async (req,res) => {
             },
             follower_list: {
               user_id: user.follower_list.user_id
-            }
+            },
+            stories: user.stories
           },
         },
         process.env.SECRET_PHRASE
@@ -221,7 +267,7 @@ export const updateUsers = async (req,res) => {
         httpOnly: true,
         sameSite: 'lax'
         });
-      return res.status(200).send({ user: {full_name: updated.full_name, email_address: updated.email_address, source: updated.images.url, id: updated._id, follow_list: {user_id: user.follow_list.user_id}, follower_list: {user_id: user.follower_list.user_id}} ,message: "You have successfully updated!" })
+      return res.status(200).send({ user: {full_name: updated.full_name, email_address: updated.email_address, source: updated.images.url, id: updated._id, follow_list: {user_id: user.follow_list.user_id}, follower_list: {user_id: user.follower_list.user_id}, stories: user.stories} ,message: "You have successfully updated!" })
     }
   } catch (error) {
     res.status(409).json({message: error.message})
@@ -249,7 +295,8 @@ export const loginUsers = async (req,res) => {
             },
             follower_list: {
               user_id: user.follower_list.user_id
-            }
+            },
+            stories: user.stories
           },
         },
         process.env.SECRET_PHRASE
@@ -264,7 +311,7 @@ export const loginUsers = async (req,res) => {
         httpOnly: true,
         sameSite: 'lax'
         });
-      return res.status(200).json({ user: {full_name: user.full_name, email_address: `${email_address}`, source: user.images.url, id: user._id, follow_list: {user_id: user.follow_list.user_id}, follower_list: {user_id: user.follower_list.user_id}} ,message: "You have successfully logged in!" });
+      return res.status(200).json({ user: {full_name: user.full_name, email_address: `${email_address}`, source: user.images.url, id: user._id, follow_list: {user_id: user.follow_list.user_id}, follower_list: {user_id: user.follower_list.user_id}, stories: user.stories} ,message: "You have successfully logged in!" });
     } else {
       res.status(401).send({message: 'Error'});
       // throw new Error("email or password is not valid");
@@ -278,7 +325,6 @@ const { tokenn }  = req.cookies
   }
   try {
     const user = jwt.verify(tokenn, process.env.SECRET_PHRASE)
-    console.log(user.user)
     res.status(200).send(user.user)
   } catch (error) {
     return res.sendStatus(204)

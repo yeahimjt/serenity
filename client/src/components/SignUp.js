@@ -42,13 +42,10 @@ const SignUp = () => {
       onSubmit,
     });
     useEffect(()=> {
-      if (alert.message) {
-        if (alert.message.success) {
-          nav('/login')
-        }
-      }
+      
     },[alert])
   return (
+    <div className="h-screen">
     <div className="m-base bg-[color:var(--gray)] rounded-login flex w-[60%] mx-auto p-8 gap-4">
       <div className="flex flex-col gap-4 flex-[0.4] p-12 bg-white">
         <h2 className="font-important text-base text-[color:var(--blue)]">Serenity Spirit</h2>
@@ -98,6 +95,8 @@ const SignUp = () => {
         <p className="pt-8">Already have an account? <Link to='/login' className="text-[color:var(--blue)]">Log In</Link></p>
       </div>
     </div>
+    </div>
+
   )
 }
 

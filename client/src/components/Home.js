@@ -11,13 +11,14 @@ import ImposterSyndrome from '../assets/imposter_syndrome.jpg'
 import PTSD from '../assets/ptsd.jpg'
 import SocialIsolation from '../assets/social_anxiety.jpg'
 import Stress from '../assets/stress.jpeg'
+import MostInspiring from './MostInspiring'
 
 
 const Home = () => {
   const [highlight, setHighlight] = useState(null)
   const nav = useNavigate()
   useEffect(() => {
-    getPostsById('64a60ef59e5817c2b0e3387e', setHighlight)
+    getPostsById('64abd59d81f2cad345208c77', setHighlight)
     getPostsByInspired(setInspired)
 
   }, [])
@@ -26,25 +27,22 @@ const Home = () => {
       const wpm = 255;
       const words = text.trim().split(/\s+/).length;
       const time = Math.ceil(words / wpm);
-      console.log(time)
       return time
     }
   }
   const [picture, setPicture] = useState(null)
   const [inspired, setInspired] = useState(null)
 
-  console.log(inspired)
   useEffect(()=> {
     getUsersPicture(highlight?.user_id,setPicture)
 
   },[highlight])
-  console.log(highlight)
   return (
     <>
     <header className="mx-8 mt-4 bg-[color:var(--gray)] rounded-general py-12">
       <h3 className="font-important text-med text-center">Welcome to <i className="">Serenity Spirit</i></h3>
       <h2 className="font-base text-big text-center pt-2">Unleash the Power of Your Story</h2>
-      <h1 className="font-base text-big text-center"><b className="text-[color:var(--blue)]">Empower</b> Yourself 💪, <b className="text-[color:var(--blue)]">Inspire</b> Others 💡</h1>
+      <h1 className="font-base tablet:text-big text-med text-center"><b className="text-[color:var(--blue)]">Empower</b> Yourself 💪, <b className="text-[color:var(--blue)]">Inspire</b> Others 💡</h1>
     </header>
     <div className="mx-8 py-12 flex tablet:flex-row flex-col">
 
@@ -54,7 +52,7 @@ const Home = () => {
           </section>
         :
           <section className="flex-[0.45] w-full  bg-[color:var(--gray)] rounded-general">
-
+            
           </section>
         }
 
@@ -80,22 +78,22 @@ const Home = () => {
     <div className="mx-8">
       <h1 className="text-4xl font-important pb-6">Most Inspiring 💡</h1>
       <section className="flex flex-wrap justify-evenly gap-5">
-        {inspired && inspired.map((post) => 
-          <Story story={post}/>
+        {inspired && inspired.map((post,index) => 
+          <MostInspiring key={index} story={post}/>
         )}
       </section>
     </div>
     <div className=" py-12">
       <h1 className="font-important text-big text-center pb-6">Find A Story By Category 🗄️</h1>
-      <section className="flex justify-center items-center flex-wrap gap-5 w-[75%] mx-auto pb-6">
-        <div className="relative group"><img className="max-w-[440px] rounded-general cursor-pointer"src={Anxiety}  alt=""/><p className="absolute top-0 w-full bg-black/40 text-white font-important text-big h-full flex justify-center items-center rounded-general group-hover:hidden">Anxiety</p></div>
-        <div className="relative group"><img className="max-w-[440px] rounded-general cursor-pointer"src={Depression}  alt=""/><p className="absolute top-0 w-full bg-black/40 text-white font-important text-big h-full flex justify-center items-center rounded-general group-hover:hidden">Depression</p></div>
-        <div className="relative group"><img className="max-w-[440px] rounded-general cursor-pointer"src={PTSD}  alt=""/><p className="absolute top-0 w-full bg-black/40 text-white font-important text-big h-full flex justify-center items-center rounded-general group-hover:hidden">PTSD</p></div>
+      <section className="flex justify-center items-center flex-wrap gap-5 tablet:w-[75%] mx-auto pb-6">
+        <div className="relative group" onClick={()=>nav(`/stories/anxiety`)}><img className="max-w-[200px] categories:max-w-[440px] rounded-general cursor-pointer"src={Anxiety}  alt=""/><p className="absolute top-0 w-full bg-black/40 text-white font-important text-med categories:text-big h-full flex justify-center items-center rounded-general group-hover:hidden">Anxiety</p></div>
+        <div className="relative group" onClick={()=>nav(`/stories/depression`)}><img className="max-w-[200px] categories:max-w-[440px] rounded-general cursor-pointer"src={Depression}  alt=""/><p className="absolute top-0 w-full bg-black/40 text-white font-important text-med categories:text-big h-full flex justify-center items-center rounded-general group-hover:hidden">Depression</p></div>
+        <div className="relative group" onClick={()=>nav(`/stories/ptsd`)}><img className="max-w-[200px] categories:max-w-[440px] rounded-general cursor-pointer"src={PTSD}  alt=""/><p className="absolute top-0 w-full bg-black/40 text-white font-important text-med categories:text-big h-full flex justify-center items-center rounded-general group-hover:hidden">PTSD</p></div>
       </section>
-      <section className="flex justify-center items-center flex-wrap gap-5 w-[75%] mx-auto">
-        <div className="relative group cursor-pointer"><img className="max-w-[440px] rounded-general"src={ImposterSyndrome}  alt=""/><p className="absolute top-0 w-full bg-black/40 text-white font-important text-big h-full flex justify-center items-center rounded-general group-hover:hidden">Imposter Syndrome</p></div>
-        <div className="relative group cursor-pointer"><img className="max-w-[440px] rounded-general"src={SocialIsolation}  alt=""/><p className="absolute top-0 w-full bg-black/40 text-white font-important text-big h-full flex justify-center items-center rounded-general group-hover:hidden">Social Anxiety</p></div>
-        <div className="relative group cursor-pointer"><img className="max-w-[440px] h-[440px] rounded-general"src={Stress}  alt=""/><p className="absolute top-0 w-full bg-black/40 text-white font-important text-big h-[440px] flex justify-center items-center rounded-general group-hover:hidden">Stress</p></div>
+      <section className="flex justify-center items-center flex-wrap gap-5 tablet:w-[75%] mx-auto">
+        <div className="relative group cursor-pointer" onClick={()=>nav(`/stories/imposter`)}><img className="max-w-[200px] categories:max-w-[440px] rounded-general"src={ImposterSyndrome}  alt=""/><p className="absolute top-0 w-full bg-black/40 text-white font-important text-med categories:text-big h-full flex justify-center items-center rounded-general group-hover:hidden">Imposter Syndrome</p></div>
+        <div className="relative group cursor-pointer" onClick={()=>nav(`/stories/social`)}><img className="max-w-[200px] categories:max-w-[440px] rounded-general"src={SocialIsolation}  alt=""/><p className="absolute top-0 w-full bg-black/40 text-white font-important text-med categories:text-big h-full flex justify-center items-center rounded-general group-hover:hidden">Social Anxiety</p></div>
+        <div className="relative group cursor-pointer" onClick={()=>nav(`/stories/stress`)}><img className="max-w-[200px] categories:max-w-[440px] h-[200px] categories:h-[440px] rounded-general"src={Stress}  alt=""/><p className="absolute top-0 w-full bg-black/40 text-white font-important text-med categories:text-big h-[200px] categories:h-[440px] flex justify-center items-center rounded-general group-hover:hidden">Stress</p></div>
       </section>
     </div>
     </>

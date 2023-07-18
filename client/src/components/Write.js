@@ -14,9 +14,9 @@ const Write = () => {
         {value: "anxiety",label:"Anxiety"},
         {value: "depression",label:"Depression"},
         {value: "stress",label:"Stress"},
-        {value: "substance_dependence",label:"Substance Dependence"},
-        {value: "eating_disorder",label:"Eating Disorder"},
-        {value: "social_anxiety",label:"Social Anxiety"},
+        {value: "substance",label:"Substance Dependence"},
+        {value: "eating",label:"Eating Disorder"},
+        {value: "social",label:"Social Anxiety"},
         {value: "ptsd",label:"PTSD"},
     ]
 
@@ -65,7 +65,7 @@ const Write = () => {
         }
     }
   return (
-    <div className="flex flex-col gap-4 m-base tablet:w-[70%] tablet:mx-auto">
+    <div className="flex flex-col gap-4 m-base tablet:w-[70%] tablet:mx-auto h-[100vh]">
         <section>
             <h1 className="font-important text-big">Share your story</h1>
             <p className="font-base text-base">Illuminate the path for others facing similar challanges or let them illuminate yours</p>

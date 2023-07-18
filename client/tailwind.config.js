@@ -4,9 +4,12 @@ module.exports = {
   theme: {
     extend: {
       screens: {
+        'categories': '1820px',
         'wide': '1719px',
         'tablet': '834px',
         'mobile': '320px',
+        'nav': '1506px',
+        'filters': '1680px',
       },
       fontFamily: {
         important: ["Vidaloka", "serif"],

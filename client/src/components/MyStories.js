@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { deletePost, usersPosts } from '../actions/posts'
+import { deletePost, myPosts, usersPosts } from '../actions/posts'
 import { useDispatch, useSelector } from 'react-redux'
 import { BsThreeDots } from 'react-icons/bs'
 import DataTable, { Direction } from 'react-data-table-component'
@@ -19,7 +19,7 @@ const MyStories = () => {
     const user = useSelector((state)=> state.users)
 
     const handleSingleDelete = (post_id) => {
-        dispatch(deletePost(post_id, setPosts))
+        deletePost(post_id, setPosts)
     }
     const columns = [
         {
@@ -34,23 +34,24 @@ const MyStories = () => {
         },
         {
             name: "Tags",
-            selector: row => row.tags,
+            selector: row => row.tags.join(', '),
         },
         {
-            name: "Status"
+            name: "Status",
+            selector: row => row.status,
         },
         {
             name: "Actions",
             selector: row =>
             <section className="flex gap-2 justify-center items-center">
                 <MdEdit className="cursor-pointer hover:bg-[color:var(--black)] hover:text-white rounded-full p-1" size={32} onClick={() => setModal({state:true, post_id: row})}/>
-                <MdDelete className="cursor-pointer hover:bg-[color:var(--black)] hover:text-white rounded-full p-1" size={32} />
+                <MdDelete className="cursor-pointer hover:bg-[color:var(--black)] hover:text-white rounded-full p-1" size={32} onClick={() => handleSingleDelete(row._id)}/>
             </section>
         }
     ]
 
     useEffect(()=> {
-        usersPosts(user.user.id,setPosts)
+        myPosts(user.user.id,setPosts)
     },[])
 
 
@@ -66,7 +67,7 @@ const MyStories = () => {
     })
 
   return (
-    <div>
+    <div className="h-screen">
         {posts ?
             <DataTable
                 title="My Stories"

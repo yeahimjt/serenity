@@ -4,7 +4,7 @@ import { getUsersPicture } from '../actions/users'
 import { useNavigate } from 'react-router-dom'
 import DefaultPicture from '../assets/default-person.png'
 
-const Story = ({story}) => {
+const MostInspiring = ({story}) => {
   const [picture, setPicture] = useState(null)
   const nav = useNavigate()
   useEffect(()=> {
@@ -17,14 +17,14 @@ const Story = ({story}) => {
     return time
   }
   return (
-    <div className="flex flex-col tablet:max-w-[325px] tablet:h-[458px] my-4 tablet:my-0 hover:scale-[1.01] cursor-pointer transition-all" onClick={() => nav(`/story/${story._id}`)}>
+    <div className="flex flex-[1] flex-col min-w-[325px] tablet:max-w-[625px] tablet:h-[458px] my-4 tablet:my-0 hover:scale-[1.01] cursor-pointer transition-all" onClick={() => nav(`/story/${story._id}`)}>
       {story.images ? 
           <div className="flex-[0.45] h-full w-full bg-[color:var(--gray)] rounded-general">
             <img className="rounded-general h-[206.59px] w-full object-cover" src={story.images.url} alt=""/>
           </div>
         :
-          <div className="flex-[0.45] w-full h-[206.09px] bg-[color:var(--gray)] rounded-general">
-
+          <div className="w-full h-[206px] bg-[color:var(--gray)] rounded-general">
+            
           </div>
         }
           <div className="flex-[0.55] text-ellipsis mx-6 gap-2 z-20">
@@ -49,4 +49,4 @@ const Story = ({story}) => {
   )
 }
 
-export default Story
+export default MostInspiring

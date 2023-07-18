@@ -7,15 +7,33 @@ import {
   SET_MESSAGE,
 } from "./types";
 import * as api from '../api'
-
+import DefaultPicture from '../assets/default-person.png'
 // Action Creators
-export const getUsers = () => async (dispatch) => {
-    // try {
-    //     const { data } = await api.fetchUsers()
-    //     dispatch({ type: 'FETCH_ALL_USERS', payload: data})
-    // } catch (error) {
-    //     console.log(error.message)
-    // }
+export const getUsers = async (setUsers) => {
+    try {
+        const { data } = await api.fetchUsers()
+        setUsers(data)
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+export const filterUsers = async (filter,setUsers) => {
+    try {
+        const { data } = await api.filterUsers(filter)
+        setUsers(data)
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+export const searchUsers = async (search, setResults) => {
+    try {
+        const { data } = await api.searchUsers(search)
+        setResults(data)
+    } catch (error) {
+        console.log(error.message)
+    }
 }
 
 export const getUserSecretly = async (id, setUser) => {
@@ -46,9 +64,15 @@ export const followUser =  (id, option) => async (dispatch) => {
 export const getUsersPicture = async (user_id, setPicture) => {
     try {
         const { data } = await api.fetchUsersImage(user_id)
-        if (data) {
+        if (data[0].images) {
             setPicture(data[0]['images']['url'])
         }
+        else {
+            setPicture(DefaultPicture)
+        }
+        // if (data) {
+        //     setPicture(data[0]['images']['url'])
+        // }
 
     } catch (error) {
         console.log(error.message)
@@ -58,9 +82,10 @@ export const getUsersPicture = async (user_id, setPicture) => {
 export const createUsers = (user) => async (dispatch) => {
     try {
         const { data } = await api.createUsers(user)
-        dispatch({ type: 'CREATE', payload: data})
+        dispatch({ type: REGISTER_SUCCESS, payload: data})
         dispatch({ type: 'SET_MESSAGE', payload: {success: 'Your account was created'}})
     } catch (error) {
+        console.log(error)
         dispatch({ type: REGISTER_FAIL })
         dispatch({ type: 'SET_MESSAGE', payload: {error: 'Email Address already in use'}})
         console.log(error.message)
