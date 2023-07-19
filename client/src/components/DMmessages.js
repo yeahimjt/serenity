@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 import { MdOutlineExitToApp } from 'react-icons/md'
-import { BsPlus, BsPlusSquareDotted,BsFillSendCheckFill, BsArrowLeft } from 'react-icons/bs'
+import { BsFillSendCheckFill, BsArrowLeft } from 'react-icons/bs'
 import { BiMessageAdd } from 'react-icons/bi'
 import { useSelector } from 'react-redux'
 import { AiOutlineClose } from 'react-icons/ai'
+import {uniqBy} from 'lodash'
 import { searchUsers } from '../actions/users'
 import SearchUser from './SearchUser'
 import UserMessaging from './UserMessaging'
@@ -21,10 +22,11 @@ const DMmessages = () => {
     const [newMessageText,setNewMessageText] = useState(null)
     const [messageText, setMessageText] = useState([])
     const [userMessaging, setUserMessaging] = useState(null)
+    const profile = useSelector((state)=> state.users)
     const socket = useSelector((state)=> state.socket.ws)
 
     // upon message page being mounted, add a listener for incoming messages
-
+    console.log(profile)
     useEffect(()=> {
         if (socket) {
             socket.addEventListener('message', handleMessage)
@@ -37,8 +39,9 @@ const DMmessages = () => {
         const messageData = JSON.parse(ev.data);
         if ('online' in messageData) {
             showOnlinePeople(messageData.online);
-        } else {
-            setMessageText(prev => ([...prev, {text:messageData.text, isMine: false}]))
+        } else if ('text' in messageData) {
+            console.log("in here")
+            setMessageText(prev => ([...prev, {...messageData}]))
         }
     }
 
@@ -59,11 +62,11 @@ const DMmessages = () => {
 
         socket.send(JSON.stringify({
             recipient: userMessaging._id,
+            sender: profile.user.id,
             text: newMessageText,
         }))
-        setMessageText(prev=> ([...prev, {text:newMessageText, isMine:true}]))
+        setMessageText(prev=> ([...prev, {sender: profile.user.id, recipient: userMessaging._id,text:newMessageText, _id: Date.now()}]))
     }
-
     // call search user function as user types, specifically only call as they stop typing (to prevent spam)
     useEffect(() => {
         if (search !== null) {
@@ -74,9 +77,11 @@ const DMmessages = () => {
                     setProcess(null)
                 },100)
                 )
-        }
-    },[search])
+            }
+        },[search])
 
+    // For sake of development process, remove any unnecessary double rendered messages
+    const messagesDupeless = uniqBy(messageText, '_id')
   return (
     <>
     <div className="h-screen flex">
@@ -94,7 +99,7 @@ const DMmessages = () => {
             {
                 userMessaging ?
                 <>
-                    <UserMessaging messages={messageText} user={userMessaging}/>
+                    <UserMessaging messages={messagesDupeless} user={userMessaging}/>
                     <form className="flex m-4 h-[40px] items-center" onSubmit={(e)=>sendMessage(e)}>
                         <input className="border flex-grow p-3 rounded-input" value={newMessageText || ''} type="text" placeholder="Enter your message here..." onChange={(e)=> setNewMessageText(e.target.value)}></input>
                         <button className="m-4 p-3 bg-[color:var(--blue)] text-white rounded-input"><BsFillSendCheckFill size={24}/></button>

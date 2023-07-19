@@ -12,7 +12,7 @@ import messageRoutes from './routes/messages.js'
 import cookieParser from 'cookie-parser';
 import {WebSocketServer} from 'ws'
 
-
+import MessageData from './models/messages.js'
 
 
 dotenv.config();
@@ -47,7 +47,6 @@ const server = app.listen(PORT)
 // Handling web socket for messages
 const wss = new WebSocketServer({server});
 wss.on('connection', (connection,req) => {
-    console.log('connection: ', connection)
     // Get User Data from their cookies
     const cookies = req.headers.cookie
     if (cookies) {
@@ -77,12 +76,22 @@ wss.on('connection', (connection,req) => {
 
     connection.on('message', async (message)=> {
         const messageData = JSON.parse(message.toString())
-        const {recipient, text} = messageData
+        console.log("i have been called", messageData)
+        const {recipient, sender,text,_id} = messageData
+        const storedMessage = await MessageData.create({
+            sender,
+            recipient,
+            text
+        })
+
         if (recipient && text) {
             [...wss.clients]
                 .filter(cl=> cl.id === recipient )
                 .forEach(cl=>  cl.send(JSON.stringify({
-                    text
+                    sender,
+                    recipient,
+                    text,
+                    _id: Date.now(),
                 })))
         }
     })
