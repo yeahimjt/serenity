@@ -36,6 +36,7 @@ var corsOptions = {
     exposedHeaders: ["Set-Cookie"],
 }
 
+// Insert corsoptions into cors() appropriately for localhost
 app.use(cors());
 app.use('/posts', postRoutes)
 app.use('/users', userRoutes)
