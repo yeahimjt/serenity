@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ limit: "500mb", extended: true} ));
 
 // }
 var corsOptions = {
-    origin: ['https://grand-gnome-76f510.netlify.app/'],
+    origin: ['https://grand-gnome-76f510.netlify.app'],
     methods: ['GET', 'POST'],
     credentials: true,
     exposedHeaders: ["Set-Cookie"],
@@ -38,6 +38,11 @@ var corsOptions = {
 
 // Insert corsoptions into cors() appropriately for localhost
 app.use(cors(corsOptions));
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "'https://grand-gnome-76f510.netlify.app"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 app.use('/posts', postRoutes)
 app.use('/users', userRoutes)
 app.use('/messages', messageRoutes)
