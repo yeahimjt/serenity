@@ -36,7 +36,7 @@ var corsOptions = {
     exposedHeaders: ["Set-Cookie"],
 }
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use('/posts', postRoutes)
 app.use('/users', userRoutes)
 app.use('/messages', messageRoutes)

@@ -2,7 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://serenity-ddcv.onrender.com",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@szhsin/react-menu": "^4.0.0",
