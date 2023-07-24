@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // const url = 'http://localhost:5000';
-const url = 'http://serenity-ddcv.onrender.com';
+const url = 'https://serenity-ddcv.onrender.com';
 
 export const fetchPosts = () => axios.get(url + '/posts')
 export const createPost = (newPost, tags, image) => axios.post(url + '/posts', {newPost, tags, image}, { withCredentials: true })
