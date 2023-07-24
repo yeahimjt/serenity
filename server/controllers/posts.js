@@ -61,10 +61,12 @@ export const getFeed = async (req,res) => {
 
 export const deletePosts = async (req,res) => {
     const { post_id } = req.body
+    const {tokenn} = req.cookies
     try {
+        const user = jwt.verify(tokenn, process.env.SECRET_PHRASE)
         const deleted = await PostMessage.deleteOne({_id: post_id})
         if (deleted) {
-            const postMessages = await PostMessage.find();
+            const postMessages = await PostMessage.find({_id: user.user.id});
             res.status(200).json(postMessages)
         }
     } catch (error) {
@@ -118,7 +120,7 @@ export const getUsersPosts = async (req,res) => {
 export const getMyPosts = async (req,res) => {
     const { tokenn } = req.cookies
     try {
-        const user = jwt.verify(tokenn, 'supersecretsuperslongpassword')
+        const user = jwt.verify(tokenn, process.env.SECRET_PHRASE)
         const usersPosts = await PostMessage.find({user_id: user.user.id})
 
         res.status(200).json(usersPosts)
@@ -135,7 +137,7 @@ export const createPosts = async (req,res) => {
       return res.sendStatus(204);
     }
 
-    const user = jwt.verify(tokenn, 'supersecretsuperslongpassword')
+    const user = jwt.verify(tokenn, process.env.SECRET_PHRASE)
     let tagss = []
     if (tags) {
         tags.forEach((tag)=> {tagss.push(tag['value'])})

@@ -17,7 +17,7 @@ const MostInspiring = ({story}) => {
     return time
   }
   return (
-    <div className="flex flex-[1] flex-col min-w-[325px] tablet:max-w-[625px] tablet:h-[458px] my-4 tablet:my-0 hover:scale-[1.01] cursor-pointer transition-all" onClick={() => nav(`/story/${story._id}`)}>
+    <div className="flex flex-[1] flex-col min-w-[325px] tablet:max-w-[625px] tablet:h-[458px] my-4 tablet:my-0 hover:scale-[1.01] cursor-pointer transition-all" onClick={(e) => nav(`/story/${story._id}`)}>
       {story.images ? 
           <div className="flex-[0.45] h-full w-full bg-[color:var(--gray)] rounded-general">
             <img className="rounded-general h-[206.59px] w-full object-cover" src={story.images.url} alt=""/>
@@ -28,7 +28,7 @@ const MostInspiring = ({story}) => {
           </div>
         }
           <div className="flex-[0.55] text-ellipsis mx-6 gap-2 z-20">
-            <section className="flex gap-2 justify-evenly items-center mt-2 hover:bg-[color:var(--gray)] rounded-full cursor-pointer" onClick={() => nav(`/profile/${story.user_id}`)}>
+            <section className="flex gap-2 justify-start items-center mt-2 hover:bg-[color:var(--gray)] rounded-full cursor-pointer py-2 w-fit px-2" onClick={(e) => {nav(`/profile/${story.user_id}`); e.cancelBubble = true; if (e.stopPropagation) e.stopPropagation();}}>
               {picture &&
                 <img className="w-[35px] h-[35px] rounded-full" src={picture || DefaultPicture} alt=""/>
               }

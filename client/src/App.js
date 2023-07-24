@@ -28,6 +28,8 @@ function App() {
   const location = useLocation()
   console.log(location)
   const users = useSelector((state) => state.users)
+  const [mobileMenu, setMobileMenu] = useState(false)
+
   useEffect(() => {
     dispatch(getProfile());
     dispatch({type: "INIT_SOCKET"})
@@ -35,7 +37,7 @@ function App() {
   
   return (
     <div className="">
-      {!(location.pathname === '/messages') && <Nav />}
+      {!(location.pathname === '/messages') && <Nav mobileMenu={mobileMenu} setMobileMenu={setMobileMenu}/>}
       <Alert />
       <Routes>
         <Route path="/" element={<Home />}/>

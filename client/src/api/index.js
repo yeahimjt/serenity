@@ -27,3 +27,7 @@ export const getUserSecretly = (id) => axios.post(url + '/users/secret', {id}, {
 export const followUser = (id) => axios.post(url + '/users/follow', {id}, {withCredentials: true})
 export const filterUsers = (filter) => axios.post(url + '/users/filter', {filter}, { withCredentials:true })
 export const searchUsers = (search) => axios.post(url + '/users/search', {search}, {withCredentials: true })
+
+export const fetchMessages = () => axios.get(url + '/messages', {withCredentials: true})
+export const fetchUserMessaged = (ids) => axios.post(url + '/messages', {ids}, {withCredentials: true})
+export const messageHistory = (id) => axios.post(url + '/messages/history', {id}, {withCredentials:true})

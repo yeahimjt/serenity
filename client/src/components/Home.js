@@ -45,7 +45,6 @@ const Home = () => {
       <h1 className="font-base tablet:text-big text-med text-center"><b className="text-[color:var(--blue)]">Empower</b> Yourself 💪, <b className="text-[color:var(--blue)]">Inspire</b> Others 💡</h1>
     </header>
     <div className="mx-8 py-12 flex tablet:flex-row flex-col">
-
       {highlight ? 
           <section className="flex-[0.35] h-full w-full bg-[color:var(--gray)] rounded-general">
             <img className="rounded-general w-full h-[206.59px] wide:h-full object-cover" src={highlight && highlight?.images.url} alt=""/>
@@ -75,7 +74,7 @@ const Home = () => {
           <hr className="pt-4 tablet:hidden"/>
           </section>
     </div>
-    <div className="mx-8">
+    <div className="mx-8 py-16">
       <h1 className="text-4xl font-important pb-6">Most Inspiring 💡</h1>
       <section className="flex flex-wrap justify-evenly gap-5">
         {inspired && inspired.map((post,index) => 
@@ -83,7 +82,7 @@ const Home = () => {
         )}
       </section>
     </div>
-    <div className=" py-12">
+    <div className=" py-16 mb-80">
       <h1 className="font-important text-big text-center pb-6">Find A Story By Category 🗄️</h1>
       <section className="flex justify-center items-center flex-wrap gap-5 tablet:w-[75%] mx-auto pb-6">
         <div className="relative group" onClick={()=>nav(`/stories/anxiety`)}><img className="max-w-[200px] categories:max-w-[440px] rounded-general cursor-pointer"src={Anxiety}  alt=""/><p className="absolute top-0 w-full bg-black/40 text-white font-important text-med categories:text-big h-full flex justify-center items-center rounded-general group-hover:hidden">Anxiety</p></div>

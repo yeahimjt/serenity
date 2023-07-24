@@ -9,6 +9,8 @@ import {uniqBy} from 'lodash'
 import { searchUsers } from '../actions/users'
 import SearchUser from './SearchUser'
 import UserMessaging from './UserMessaging'
+import { getMessages, messageHistory } from '../actions/dmMessages'
+import UsersMessages from './UsersMessages'
 const DMmessages = () => {
 
     // state variables for messaging
@@ -22,25 +24,29 @@ const DMmessages = () => {
     const [newMessageText,setNewMessageText] = useState(null)
     const [messageText, setMessageText] = useState([])
     const [userMessaging, setUserMessaging] = useState(null)
+    const [existing, setExisting] = useState(null)
     const profile = useSelector((state)=> state.users)
     const socket = useSelector((state)=> state.socket.ws)
 
     // upon message page being mounted, add a listener for incoming messages
-    console.log(profile)
+
     useEffect(()=> {
         if (socket) {
             socket.addEventListener('message', handleMessage)
         }
     },[socket])
-    
-    // handle incoming messages by grabbing online users or messages from user
 
+    useEffect(()=> {
+        setMessageText([])
+        messageHistory(userMessaging?._id, setMessageText)
+
+    },[userMessaging])
+    // handle incoming messages by grabbing online users or messages from user
     function handleMessage(ev) {
         const messageData = JSON.parse(ev.data);
         if ('online' in messageData) {
             showOnlinePeople(messageData.online);
         } else if ('text' in messageData) {
-            console.log("in here")
             setMessageText(prev => ([...prev, {...messageData}]))
         }
     }
@@ -48,18 +54,14 @@ const DMmessages = () => {
     function showOnlinePeople(peopleArray) {
         const people = {};
         peopleArray.forEach(({id,full_name}) => {
-          people[id] = full_name;
+            people[id] = full_name;
         });
-
-        console.log(people)
-      }
+    }
 
     // send messages to selected user (either by ws socket or store in mongodb)
-
     const sendMessage = (e) => {
         e.preventDefault()
         setNewMessageText(null)
-
         socket.send(JSON.stringify({
             recipient: userMessaging._id,
             sender: profile.user.id,
@@ -79,23 +81,25 @@ const DMmessages = () => {
                 )
             }
         },[search])
+        
+        // For sake of development process, remove any unnecessary double rendered messages
+        const messagesDupeless = uniqBy(messageText, '_id')
 
-    // For sake of development process, remove any unnecessary double rendered messages
-    const messagesDupeless = uniqBy(messageText, '_id')
   return (
     <>
     <div className="h-screen flex">
-        <div className="flex-[0.2] bg-[color:var(--gray)] h-screen flex flex-col">
+        <div className="flex-[0.25] max-w-[350px] bg-[color:var(--gray)] h-screen flex flex-col">
             <Link to="/" className="text-[color:var(--blue)] font-important text-base flex gap-1 p-4 w-fit"><MdOutlineExitToApp className="rotate-180" size={24}/> Back To Serenity Spirit</Link>
-            <section className="flex flex-grow gap-4 mx-4 my-2">
+            <section className="flex flex-col flex-grow gap-4 mx-4 my-2">
                 <h1 className="font-important text-5xl">Direct Messages</h1>
+                <UsersMessages userMessaging={userMessaging} setUserMessaging={setUserMessaging}/>
             </section>
-            <button className="bg-[color:var(--blue)] m-4 p-2  flex justify-center gap-2 items-center font-important text-med p-2 text-white rounded-input" onClick={()=>setModal(true)}>
-                <BiMessageAdd className="hover:cursor-pointer" size={30}/>
+            <button className="bg-[color:var(--blue)] m-4  flex justify-center tablet:gap-2 items-center font-important text-sm p-2 text-white rounded-input tablet:text-med" onClick={()=>setModal(true)}>
+                <BiMessageAdd className="" size={30}/>
                 <h1>Start A New Conversation</h1>
             </button>
         </div>
-        <div className="flex-[0.8] flex flex-col">
+        <div className="flex-[0.75] flex flex-col">
             {
                 userMessaging ?
                 <>
