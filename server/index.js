@@ -34,12 +34,12 @@ var corsOptions = {
     credentials: true,
 }
 
+app.enable('trust proxy')
 // Insert corsoptions into cors() appropriately for localhost
 app.use(cors(corsOptions));
 app.use('/posts', postRoutes)
 app.use('/users', userRoutes)
 app.use('/messages', messageRoutes)
-
 const PORT = process.env.PORT || 5000;
 
 mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
