@@ -9,7 +9,7 @@ export const createMessage = async (req,res) => {
 export const getMessagesOfUser = async (req,res) => {
     const {tokenn} = req.cookies
     const currentUser = jwt.verify(tokenn, process.env.SECRET_PHRASE)
-
+    console.log(tokenn)
     try {
         // get messages where user has recieved
         const messagesToUser = await MessageData.find({$or: [{recipient: currentUser.user.id}]}, {_id:0,text:0,createdAt:0,updatedAt:0,__v:0,recipient: 0})
@@ -37,7 +37,6 @@ export const getUsersMessaged = async (req,res) => {
     console.log(ids)
     try {
         const users = await UserData.find({_id: ids}, {password:0})
-        console.log(users)
         res.status(200).send(users)
     } catch (error) {
         res.status(404).send({status:"failed"})
