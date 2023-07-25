@@ -1,7 +1,7 @@
 export const socket =  (socket = {}, action) => {
     switch (action.type) {
         case 'INIT_SOCKET':
-            const ws = new WebSocket('ws://serenity-peace-api.com/')
+            const ws = new WebSocket('wss://serenity-peace-api.com:5000')
             ws.addEventListener('message',handleMessage)
             return {
                 ws: ws,
