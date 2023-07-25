@@ -1,8 +1,11 @@
 import axios from 'axios';
 
 // const url = 'http://localhost:5000';
-const url = 'https://serenity-ddcv.onrender.com';
-
+const url = 'https://serenity-ddcv.onrender.com:5000';
+const config = {
+    headers: {"Content-Type" : "application/json"},
+    withCredentials:true
+}
 export const fetchPosts = () => axios.get(url + '/posts')
 export const createPost = (newPost, tags, image) => axios.post(url + '/posts', {newPost, tags, image}, { withCredentials: true })
 export const usersPosts = (user_id) => axios.post(url + '/posts/users', {user_id}, { withCredentials: true })
