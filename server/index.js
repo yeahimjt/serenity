@@ -30,6 +30,7 @@ app.use(bodyParser.urlencoded({ limit: "500mb", extended: true} ));
 
 // }
 var corsOptions = {
+    origin: ['https://grand-gnome-76f510.netlify.app'],
     methods: ['GET', 'POST'],
     credentials: true,
     exposedHeaders: ["Set-Cookie"],
@@ -83,7 +84,7 @@ wss.on('connection', (connection,req) => {
     connection.on('message', async (message)=> {
         const messageData = JSON.parse(message.toString())
         console.log("i have been called", messageData)
-        const {recipient, sender,text,_id} = messageData
+    const {recipient, sender,text,_id} = messageData
         const storedMessage = await MessageData.create({
             sender,
             recipient,
