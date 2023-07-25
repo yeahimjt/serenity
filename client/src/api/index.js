@@ -10,7 +10,7 @@ export const myPosts = (user_id) => axios.post(url + '/posts/my', {user_id}, { w
 export const deletePosts = (post_id) => axios.post(url + '/posts/delete', {post_id}, { withCredentials: true })
 export const updatePosts = (post_id, updateFields, image, status, tagsSelected) => axios.post(url + '/posts/update', {post_id, updateFields, image, status, tagsSelected}, { withCredentials: true})
 export const postsById = (id) => axios.post(url + '/posts/id', {id}, { withCredentials: true})
-export const postsInspired = () => axios.get('/posts/inspired', { withCredentials: true,  crossorigin:true})
+export const postsInspired = () => axios.get('/posts/inspired', { withCredentials: true})
 export const postCategory = (filter) => axios.post(url + '/posts/category', {filter} ,{ withCredentials: true })
 export const getFeed = () => axios.post(url + '/posts/feed', { withCredentials: true })
 
@@ -31,4 +31,4 @@ export const searchUsers = (search) => axios.post(url + '/users/search', {search
 
 export const fetchMessages = () => axios.get(url + '/messages', {withCredentials: true})
 export const fetchUserMessaged = (ids) => axios.post(url + '/messages', {ids}, {withCredentials: true})
-export const messageHistory = (id) => axios.post(url + '/messages/history', {id}, {withCredentials:true, crossorigin:true})
+export const messageHistory = (id) => axios.post(url + '/messages/history', {id}, {withCredentials:true})
