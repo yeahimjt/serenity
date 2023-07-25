@@ -34,6 +34,7 @@ function App() {
     dispatch(getProfile());
     dispatch({type: "INIT_SOCKET"})
   },[dispatch])
+  console.log(users)
   
   return (
     <div className="">

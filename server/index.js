@@ -27,7 +27,6 @@ app.use(bodyParser.urlencoded({ limit: "500mb", extended: true} ));
 //     methods: ['GET', 'POST'],
 //     credentials: true,
 //     exposedHeaders: ["Set-Cookie"],
-
 // }
 var corsOptions = {
     origin: ['https://grand-gnome-76f510.netlify.app'],
