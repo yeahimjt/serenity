@@ -10,7 +10,7 @@ export const myPosts = (user_id) => axios.post(url + '/posts/my', {user_id}, { w
 export const deletePosts = (post_id) => axios.post(url + '/posts/delete', {post_id}, { withCredentials: true })
 export const updatePosts = (post_id, updateFields, image, status, tagsSelected) => axios.post(url + '/posts/update', {post_id, updateFields, image, status, tagsSelected}, { withCredentials: true})
 export const postsById = (id) => axios.post(url + '/posts/id', {id}, { withCredentials: true})
-export const postsInspired = () => axios.get('/posts/inspired', { withCredentials: true})
+export const postsInspired = () => axios.get(url +'/posts/inspired', { withCredentials: true})
 export const postCategory = (filter) => axios.post(url + '/posts/category', {filter} ,{ withCredentials: true })
 export const getFeed = () => axios.post(url + '/posts/feed', { withCredentials: true })
 
