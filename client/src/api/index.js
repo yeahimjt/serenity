@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // const url = 'http://localhost:5000';
-const url = 'https://www.serenity-peace-api.com:5000';
+const url = 'https://www.serenity-peace-api.com';
 
 export const fetchPosts = () => axios.get(url + '/posts')
 export const createPost = (newPost, tags, image) => axios.post(url + '/posts', {newPost, tags, image}, { withCredentials: true })
