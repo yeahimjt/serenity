@@ -139,9 +139,9 @@ export const followUser = async (req,res) => {
         expires: new Date('8 30 2023'),
 
         //CHANGE TO TRUE THAT IS WHAT IT SHULD BE I THINK
-        secure: false,
+        secure: true,
         httpOnly: true,
-        sameSite: 'lax'
+        sameSite: 'none'
         });
 
       return res.status(200).json({ user: {full_name: user.full_name, email_address: user.email_address, source: user.images.url, id: user._id, follow_list: {user_id: user.follow_list.user_id}, follower_list: {user_id: user.follower_list.user_id}, stories: user.stories} ,message: "You have successfully followed!" });
@@ -180,9 +180,9 @@ export const followUser = async (req,res) => {
         expires: new Date('8 12 2023'),
 
         //CHANGE TO TRUE THAT IS WHAT IT SHULD BE I THINK
-        secure: false,
+        secure: true,
         httpOnly: true,
-        sameSite: 'lax'
+        sameSite: 'none'
         });
 
       
@@ -263,9 +263,9 @@ export const updateUsers = async (req,res) => {
         expires: new Date('8 12 2023'),
 
         //CHANGE TO TRUE THAT IS WHAT IT SHULD BE I THINK
-        secure: false,
+        secure: true,
         httpOnly: true,
-        sameSite: 'lax'
+        sameSite: 'none'
         });
       return res.status(200).send({ user: {full_name: updated.full_name, email_address: updated.email_address, source: updated.images.url, id: updated._id, follow_list: {user_id: user.follow_list.user_id}, follower_list: {user_id: user.follower_list.user_id}, stories: user.stories} ,message: "You have successfully updated!" })
     }
@@ -307,9 +307,9 @@ export const loginUsers = async (req,res) => {
         expires: new Date('8 12 2023'),
 
         //CHANGE TO TRUE THAT IS WHAT IT SHULD BE I THINK
-        secure: false,
+        secure: true,
         httpOnly: true,
-        sameSite: 'lax'
+        sameSite: 'none'
         });
       return res.status(200).json({ user: {full_name: user.full_name, email_address: `${email_address}`, source: user.images.url, id: user._id, follow_list: {user_id: user.follow_list.user_id}, follower_list: {user_id: user.follower_list.user_id}, stories: user.stories} ,message: "You have successfully logged in!" });
     } else {
