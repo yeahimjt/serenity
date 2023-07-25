@@ -320,7 +320,7 @@ export const loginUsers = async (req,res) => {
 
 export const profileUsers = async (req,res) => {
 const { tokenn }  = req.cookies
-console.log(tokenn)
+console.log('token from profile', tokenn)
   if (!tokenn) {
     return res.sendStatus(204);
   }
