@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ limit: "500mb", extended: true} ));
 //     exposedHeaders: ["Set-Cookie"],
 // }
 var corsOptions = {
-    origin: ['www.serenity-peace-api.com'],
+    origin: ['https://www.serenity-peace-api.com/'],
     methods: ['GET', 'POST'],
     credentials: true,
 }
