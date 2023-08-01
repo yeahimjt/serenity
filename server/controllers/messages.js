@@ -6,6 +6,20 @@ export const createMessage = async (req,res) => {
 
 }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// NEED SOME SORT OF & OPERATOR WHERE ONLY MESSAGES GRABBED FROM SELECTED USERS ARE TO YOU AND NOT TO ANYONE ELSE
+
+
 export const getMessagesOfUser = async (req,res) => {
     const {tokenn} = req.cookies
     const currentUser = jwt.verify(tokenn, process.env.SECRET_PHRASE)
