@@ -5,7 +5,7 @@ const router = express.Router();
 router.get('/', getUsers)
 router.post('/', createUsers)
 router.post('/login', loginUsers)
-router.post('/profile', profileUsers)
+router.get('/profile', profileUsers)
 router.post('/update', updateUsers)
 router.post('/logout', logout)
 router.post('/image', getUsersImage)

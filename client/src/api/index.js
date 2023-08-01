@@ -20,7 +20,7 @@ export const getFeed = () => axios.post(url + '/posts/feed', { withCredentials: 
 export const fetchUsers = () => axios.get(url + '/users', { withCredentials: true, credentials: 'include' })
 export const createUsers = (newUser) => axios.post(url + '/users', newUser, { withCredentials: true, credentials: 'include' })
 export const loginUsers = (userData) => axios.post(url + '/users/login', userData, { withCredentials: true, credentials: 'include' })
-export const profileUsers = () => axios.post(url + '/users/profile', { withCredentials: true, credentials: 'include' })
+export const profileUsers = () => axios.get(url + '/users/profile', { withCredentials: true, credentials: 'include' })
 export const logout = () => axios.post(url + '/users/logout', { withCredentials: true, credentials: 'include' })
 export const updateUsers = (userData, images) => axios.post(url + '/users/update', {userData,images}, { withCredentials: true, credentials: 'include' })
 export const fetchUsersImage = (user_id) => axios.post(url + '/users/image', {user_id}, { withCredentials: true, credentials: 'include' })
