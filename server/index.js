@@ -49,6 +49,7 @@ mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnified
 
 // Running server
 const server = app.listen(PORT)
+console.log(server)
 
 // Handling web socket for messages
 const wss = new WebSocketServer({server});
