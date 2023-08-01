@@ -17,6 +17,7 @@ import MessageData from './models/messages.js'
 
 dotenv.config();
 const app = express();
+app.enable('trust proxy',1)
 app.use(cookieParser())
 
 
@@ -35,7 +36,6 @@ var corsOptions = {
     exposedHeaders: ["Set-Cookie"],
 }
 
-app.enable('trust proxy')
 // Insert corsoptions into cors() appropriately for localhost
 app.use(cors(corsOptions));
 app.use('/posts', postRoutes)
