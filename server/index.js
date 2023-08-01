@@ -32,6 +32,7 @@ var corsOptions = {
     origin: ['https://www.serenity-peace-api.com'],
     methods: ['GET', 'POST'],
     credentials: true,
+    exposedHeaders: ["Set-Cookie"],
 }
 
 app.enable('trust proxy')
