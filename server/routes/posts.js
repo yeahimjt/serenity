@@ -10,7 +10,7 @@ router.post('/delete', deletePosts)
 router.post('/update', updatePosts)
 router.post('/id', getPostsById)
 router.post('/category', getPostsByCategory)
-router.post('/feed', getFeed)
+router.get('/feed', getFeed)
 router.post('/my', getMyPosts)
 
 

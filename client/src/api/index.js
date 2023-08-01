@@ -12,7 +12,7 @@ export const updatePosts = (post_id, updateFields, image, status, tagsSelected) 
 export const postsById = (id) => axios.post(url + '/posts/id', {id}, { withCredentials: true, credentials: 'include' })
 export const postsInspired = () => axios.get(url + '/posts/inspired', { withCredentials: true, credentials: 'include' })
 export const postCategory = (filter) => axios.post(url + '/posts/category', {filter} ,{ withCredentials: true, credentials: 'include' })
-export const getFeed = () => axios.post(url + '/posts/feed', { withCredentials: true, credentials: 'include' })
+export const getFeed = () => axios.get(url + '/posts/feed', { withCredentials: true, credentials: 'include' })
 
 // ** NOTE ** For some reason not including the url in the axios requests solves issue with accessing cookie located in Application -> Cookies -> tokenn
 // Might need to tweak this in future if problem arises
