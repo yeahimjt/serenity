@@ -60,8 +60,25 @@ export const getUsersMessaged = async (req,res) => {
 
 export const getMessageHistory = async (req,res) => {
     const {id} = req.body;
+    const currentUser = jwt.verify(tokenn, process.env.SECRET_PHRASE)
     try {
-        const messages = await MessageData.find({$or: [{sender: id}, {recipient: id}]})
+        // const messages = await MessageData.find({$or: [{sender: id}, {recipient: id}]})
+        const messages = await MessageData.find({
+            $or: [
+                {
+                    $and: [
+                        {sender: id},
+                        {recipient: currentUser.user.id}
+                    ]
+                },
+                {
+                    $and: [
+                        {sender: currentUser.user.id},
+                        {recipient: id}
+                    ]
+                }
+            ]
+        })
         res.status(200).send(messages)
     } catch (error) {
         res.status(404).send({status:"failed"})
