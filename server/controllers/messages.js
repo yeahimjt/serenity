@@ -60,6 +60,7 @@ export const getUsersMessaged = async (req,res) => {
 
 export const getMessageHistory = async (req,res) => {
     const {id} = req.body;
+    const {tokenn} = req.cookies
     const currentUser = jwt.verify(tokenn, process.env.SECRET_PHRASE)
     try {
         // const messages = await MessageData.find({$or: [{sender: id}, {recipient: id}]})
