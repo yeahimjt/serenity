@@ -15,8 +15,9 @@ const Read = () => {
     useEffect(()=> {
         getUsersPicture(post?.user_id,setPicture)
     },[post])
+    console.log(post)
   return (
-    <div className="flex flex-col w-[85%] mx-auto h-screen my-16 gap-4">
+    <div className="flex flex-col w-[85%] mx-auto h-screen overflow-auto my-16 gap-4">
         <div className="flex justify-between items-end flex-wrap">
         <h1 className="font-important text-big tablet:w-[65%]">{post?.title}</h1>
             <section className="flex gap-2 justify-center items-center mt-2 hover:bg-[color:var(--gray)] rounded-full cursor-pointer p-4" onClick={()=> nav(`/profile/${post.user_id}`)}>
@@ -30,10 +31,8 @@ const Read = () => {
               <p className="font-base text-base">{timeSince(new Date(post?.createdAt))}</p>
             </section>
         </div>
-        {post?.images ? 
+        {post?.images &&
           <div className="w-full h-[350px] bg-cover bg-local bg-left-top rounded-general bg-no-repeat" style={{backgroundImage: `url(${post?.images.url})`}}></div>
-        :
-        ''
         }
         <p className="font-base text-med whitespace-pre-wrap w-full pt-16">
             {post?.message}
