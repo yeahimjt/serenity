@@ -22,7 +22,6 @@ const Nav = ({mobileMenu, setMobileMenu}) => {
           <Link className="text-med" to="/stories">Stories</Link>
           <Link className="text-med" to="/feed">Timeline</Link>
           <Link className="text-med" to="/creators">Creators</Link>
-          <Link className="text-med" to="/stories">Resources</Link>
           <Link className="text-med" to="/messages">Messages</Link>
           {/* <input className="border-2 rounded-input p-2 w-[240px] "/> */}
         </div>
@@ -70,7 +69,6 @@ const Nav = ({mobileMenu, setMobileMenu}) => {
           <Link className="text-big hover:underline" to="/stories" onClick={()=>setMobileMenu(false)}>Stories</Link>
           <Link className="text-big hover:underline" to="/feed" onClick={()=>setMobileMenu(false)}>Timeline</Link>
           <Link className="text-big hover:underline" to="/creators" onClick={()=>setMobileMenu(false)}>Creators</Link>
-          <Link className="text-big hover:underline" to="/stories" onClick={()=>setMobileMenu(false)}>Resources</Link>
           <Link className="text-big hover:underline" to="/messages" onClick={()=>setMobileMenu(false)}>Messages</Link>
           {user.isLoggedIn &&
             <Link className="flex gap-2 items-center text-big hover:underline" to="/write" onClick={()=>setMobileMenu(false)}><BsPencilSquare size={24}/>Write</Link>
