@@ -77,12 +77,12 @@ Now that the project has been completed here are some things I accomplished:
 * Users can Peer-To-Peer message those who inspired them from their stories
 * Users can easily edit their profile or stories
 
+Although I have marked the project as complete I will continue to update its features and fix any bugs that may occur.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 ### Built With
-
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
 * ![React][React.js]
 * ![Redux][Redux]
@@ -100,10 +100,17 @@ This section should list any major frameworks/libraries used to bootstrap your p
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-* Click Discover, change filter from Movies -> Tv Shows. Load new results by clicking pagination arrows. Click on card to display more information on item
-* Click Trending, change filter from Movies -> Tv Shows. Load new results by clicking pagination arrows. Click on card to display more information on item
-* Click People, load new results by clicking pagination arrows. Click on card to display more information on item
-* Enter query in search bar for what you desire to find, upon pressing enter click desired filter (Movie, Tv Show, People) and click on the correct movie/tv shows/person card to see more information.
+* Upon allowing the application to load for 1-2 minutes data will be loaded in
+* On data loaded in, navigate to the login button and select the Sign-Up option to fill out appropriate information for a new account
+* On account created, navigate back to login page and login
+* Log into newly created account
+* To write a story click the 'write a story button'
+* To view stories select 'stories' and click appropriate category
+* To view creators select 'creators' and click appropriate category
+* To follow a creator select their Icon and Name from a story post and select 'Follow'
+* To view custom timeline ensure you are following at least one person and select 'timeline'
+* To message any user select 'Messages'
+* Upon entering the messages page click 'Start A New Conversation' and enter the name of the person you wish to contact.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
