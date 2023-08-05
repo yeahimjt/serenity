@@ -52,13 +52,6 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -70,18 +63,19 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://yeahimjt.github.io/movieapp)
+[![Product Name Screen Shot][product-screenshot]](https://yeahimjt.github.io/serenity)
 
-This projects main goal was to concrete my knowledge with working with APIs, Tailwind CSS and Redux. This involved handling errors, managing the data, and displaying the data cleanly for the best UX/UI experience. This project acheived it all.
+Serenity Peace is a safe place where users can share their stories regarding their mental health to empower themselves and inspire others. It's functionality is quite similar to that of Instagram or Twitter where users who are logged in can be given a custom timeline from creators they follow for a more taillored reading experience. Users sessions are stored via cookies securely and are distributed from client->server through appropriately configured CORS options and utilizing Top-Level Domain/Sub-Level Domain appropriately.
 
-Here's why:
-* User is met with a clean and easily navigatable UI upon first load.
-* User experience is clear enough where the user knows what to click and what they will receive upon clicking.
-* Errors are handled by Front End by simply not loading the specific errored component if it does not receive specific data. For example: If the movie does not have an Official Trailer it will not load the Youtube Media Component as it would just display an error.
-* Built components handle data efficiently where a limit to the data received can be set to avoid displaying too much data back to the user that could potentially overload them.
-* Filter for each respective page
-* Pagination for each respective page
-* Search for movies, tv shows, and people at the same time and allow filter to let user know if their search query has any data for that specific filter
+My approach for this project was to create something that I felt could truly be of service in someones life. From this intial idea I went through all of the appropriate steps to creating this application by using a 7 step SDLC that included steps: Requirements & Analysis, Project Planning, Design, Coding & Implementation, Testing, Deployment, and Maintenance. 
+
+Now that the project has been completed here are some things I accomplished:
+* A clean UI/UX experience with a clear path for the user to follow to start sharing/reading stories.
+* Error logic is handled appropriately where user will get instant feedback when error occurs.
+* The Web Application is a single web page application using react-router-dom so load times of images/pages are minimal so the user recieves promptly.
+* Stories/Creators are filterable to narrow down on content the user wishes to read
+* Users can Peer-To-Peer message those who inspired them from their stories
+* Users can easily edit their profile or stories
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -102,45 +96,6 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 
 
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key for The Movie Database API by following instructions at: [https://www.themoviedb.org/documentation/api?language=en-US](https://www.themoviedb.org/documentation/api?language=en-US)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/yeahimjt/movieapp.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API located in file `/src/assets/CONSTANTS.js`
-   ```js
-   const APIKEY = 'REPLACE WITH YOUR API';
-   ```
-5. Run command to start project locally
-    ```sh
-    npm start
-    ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -158,10 +113,9 @@ _Below is an example of how you can instruct your audience on installing and set
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Add Search
-- [ ] Add reviews
-- [ ] Learn how to switch language to
-    - Spanish
+- [x] Tweak UI design to give it more personality with some of the pages
+- [ ] Allow users to save their favorite stories
+- [ ] Implement a language switch to allow for spanish translation
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -179,9 +133,8 @@ Email - jonathanandrewtrevino@gmail.com
 
 Some of the documentation and applications I used to increase roll out for project.
 
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
 * [React Icons](https://react-icons.github.io/react-icons/search)
+* [MongoDB] (https://www.mongodb.com/docs/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -191,7 +144,7 @@ Some of the documentation and applications I used to increase roll out for proje
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/jonathanandrewtrevino
-[product-screenshot]: /src/assets/movieapp.png
+[product-screenshot]: /src/assets/s1.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [Redux]: https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white
 [HTML5]: https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white
