@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux'
 const Creator = ({story}) => {
     const nav = useNavigate()
     const profile = useSelector((state)=> state.users)
-    console.log(profile)
   return (
     <div className="w-[345px] h-[194px] flex flex-col border-2 px-2 cursor-pointer" onClick={()=>nav(`/profile/${story._id}`)}>
         <div className="flex h-[114px] pt-2">

@@ -58,7 +58,6 @@ const MyStories = () => {
     // Handle selection actions 
     const contextActions = React.useMemo(() => {
         const handleDelete = () => {
-            console.log('deleting!')
         };
 
         return (

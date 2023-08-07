@@ -12,7 +12,6 @@ const ReadUser = () => {
     const [user, setUser] = useState(null)
     const [filterText, setFilterText] = useState(null)
     const [following, setFollowing] = useState(null)
-    console.log(id)
     useEffect(()=> {
         getUserSecretly(id, setUser)
         usersPosts(id, setFilterText)
@@ -36,7 +35,6 @@ const ReadUser = () => {
             dispatch(followUser(id, (log_user?.user.follow_list.user_id.includes(id) ? true : false)))
         }
     }
-    console.log(filterText)
   return (
     <div className="flex flex-col gap-4 m-base tablet:w-[70%] tablet:mx-auto h-screen">
         <div className="flex gap-8">

@@ -7,7 +7,6 @@ import { Link, useSearchParams } from 'react-router-dom'
 
 const Timeline = () => {
   const [posts,setPosts] = useState(null)
-  console.log(posts)
   useEffect(()=> {
     getFeed(setPosts)
   },[])

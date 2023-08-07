@@ -17,7 +17,6 @@ const LogIn = () => {
   const nav = useNavigate()
   const alert = useSelector((state)=> state.messages)
   const onSubmit = async (values, actions) => {
-    console.log('submitting')
     dispatch(loginUsers(values))
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();

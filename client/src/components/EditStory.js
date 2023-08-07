@@ -61,7 +61,6 @@ const EditStory = ({modal,setModal, setPosts}) => {
     useEffect(()=> {
 
     },[])
-    console.log(image)
   return (
     <div className="flex justify-center relative top-24 ">
         <section className="flex-[0.5] max-w-[680px] bg-white px-12 py-8 relative rounded-general">

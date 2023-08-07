@@ -10,7 +10,6 @@ const UsersMessages = ({userMessaging,setUserMessaging}) => {
     useEffect(()=> {
         getUsersMessaged(existing, setProfiles)
     },[existing])
-    console.log(userMessaging, profiles)
 
   return (
     <div className="py-4 overflow-auto">

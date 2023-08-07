@@ -3,7 +3,6 @@ import * as api from '../api'
 export const getMessages = async (setExisting) => {
     try {
         const { data } = await api.fetchMessages();
-        console.log(data)
         setExisting(data)
     } catch (error) {
         console.log(error)

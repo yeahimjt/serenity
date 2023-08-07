@@ -14,7 +14,6 @@ export const getFeed = async (setPosts) => {
     try {
         const {data} = await api.getFeed()
         if (data.status === false) {
-            console.log('bad')
         }
         setPosts(data)
     } catch (error) {

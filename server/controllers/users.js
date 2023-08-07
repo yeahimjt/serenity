@@ -71,7 +71,7 @@ export const getUsersImage = async (req,res) => {
       res.status(200).json(users)
   } catch (error) {
     res.status(404).json({message:error.mesage})
-    console.log(error.message)
+    res.status(404).json({message:error.message})
   }
 }
 
@@ -320,8 +320,6 @@ export const loginUsers = async (req,res) => {
 
 export const profileUsers = async (req,res) => {
 const { tokenn }  = req.cookies
-console.log(req)
-console.log('token from profile', tokenn)
   if (!tokenn) {
     return res.sendStatus(204);
   }

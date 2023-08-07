@@ -48,7 +48,6 @@ export const getUserSecretly = async (id, setUser) => {
 export const followUser =  (id, option) => async (dispatch) => {
     try {
         const { data } = await api.followUser(id)
-        console.log(data)
         dispatch({type: LOGIN_SUCCESS, payload: data})
         if (option) {
             dispatch({type: 'SET_MESSAGE', payload: {success: "Successfully Unfollowed User"}})
@@ -85,7 +84,6 @@ export const createUsers = (user) => async (dispatch) => {
         dispatch({ type: REGISTER_SUCCESS, payload: data})
         dispatch({ type: 'SET_MESSAGE', payload: {success: 'Your account was created'}})
     } catch (error) {
-        console.log(error)
         dispatch({ type: REGISTER_FAIL })
         dispatch({ type: 'SET_MESSAGE', payload: {error: 'Email Address already in use'}})
         console.log(error.message)
@@ -105,7 +103,6 @@ export const updateUsers = (userData, images) => async (dispatch) => {
 }
 
 export const loginUsers = (user) => async (dispatch) => {
-    console.log('loggin')
     try {
         const { data } = await api.loginUsers(user)
         dispatch({ type: LOGIN_SUCCESS, payload: data})

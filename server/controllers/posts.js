@@ -32,7 +32,6 @@ export const getPosts = async (req,res) => {
         res.status(200).send({posts:postMessages,tags: something})
     } catch (error) {
         res.status(404).send({message: error.message})
-        console.log(error.message)
     }
 }
 
