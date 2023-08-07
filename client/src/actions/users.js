@@ -69,9 +69,7 @@ export const getUsersPicture = async (user_id, setPicture) => {
         else {
             setPicture(DefaultPicture)
         }
-        // if (data) {
-        //     setPicture(data[0]['images']['url'])
-        // }
+
 
     } catch (error) {
         console.log(error.message)

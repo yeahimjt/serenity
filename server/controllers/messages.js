@@ -2,23 +2,6 @@ import MessageData from '../models/messages.js';
 import UserData from '../models/userdata.js';
 import jwt from 'jsonwebtoken';
 
-export const createMessage = async (req,res) => {
-
-}
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// NEED SOME SORT OF & OPERATOR WHERE ONLY MESSAGES GRABBED FROM SELECTED USERS ARE TO YOU AND NOT TO ANYONE ELSE
-
 
 export const getMessagesOfUser = async (req,res) => {
     const {tokenn} = req.cookies
@@ -61,7 +44,6 @@ export const getMessageHistory = async (req,res) => {
     const {tokenn} = req.cookies
     const currentUser = jwt.verify(tokenn, process.env.SECRET_PHRASE)
     try {
-        // const messages = await MessageData.find({$or: [{sender: id}, {recipient: id}]})
         const messages = await MessageData.find({
             $or: [
                 {

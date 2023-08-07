@@ -134,11 +134,7 @@ export const followUser = async (req,res) => {
         process.env.SECRET_PHRASE
       );
       res.cookie('tokenn', accessToken,{
-        // maxAge: 60*60*24*3,
-        // expires works the same as the maxAge
-        expires: new Date('8 30 2023'),
-
-        //CHANGE TO TRUE THAT IS WHAT IT SHULD BE I THINK
+        expires: new Date('8 30 2025'),
         secure: true,
         domain: ".serenity-peace-api.com",
         sameSite: 'none'
@@ -175,11 +171,7 @@ export const followUser = async (req,res) => {
         process.env.SECRET_PHRASE
       );
       res.cookie('tokenn', accessToken,{
-        // maxAge: 60*60*24*3,
-        // expires works the same as the maxAge
-        expires: new Date('8 12 2023'),
-
-        //CHANGE TO TRUE THAT IS WHAT IT SHULD BE I THINK
+        expires: new Date('8 12 2025'),
         secure: true,
         domain: ".serenity-peace-api.com",
         sameSite: 'none'
@@ -258,11 +250,7 @@ export const updateUsers = async (req,res) => {
         process.env.SECRET_PHRASE
       );
       res.cookie('tokenn', accessToken,{
-        // maxAge: 60*60*24*3,
-        // expires works the same as the maxAge
-        expires: new Date('8 12 2023'),
-
-        //CHANGE TO TRUE THAT IS WHAT IT SHULD BE I THINK
+        expires: new Date('8 12 2025'),
         secure: true,
         domain: ".serenity-peace-api.com",
         sameSite: 'none'
@@ -302,11 +290,7 @@ export const loginUsers = async (req,res) => {
         process.env.SECRET_PHRASE
       );
       res.cookie('tokenn', accessToken,{
-        // maxAge: 60*60*24*3,
-        // expires works the same as the maxAge
-        expires: new Date('8 12 2023'),
-
-        //CHANGE TO TRUE THAT IS WHAT IT SHULD BE I THINK
+        expires: new Date('8 12 2025'),
         secure: true,
         domain: ".serenity-peace-api.com",
         sameSite: 'none'
@@ -314,7 +298,6 @@ export const loginUsers = async (req,res) => {
       return res.status(200).json({ user: {full_name: user.full_name, email_address: `${email_address}`, source: user.images.url, id: user._id, follow_list: {user_id: user.follow_list.user_id}, follower_list: {user_id: user.follower_list.user_id}, stories: user.stories} ,message: "You have successfully logged in!" });
     } else {
       res.status(401).send({message: 'Error'});
-      // throw new Error("email or password is not valid");
     }
 }
 

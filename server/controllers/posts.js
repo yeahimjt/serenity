@@ -174,11 +174,7 @@ export const createPosts = async (req,res) => {
             process.env.SECRET_PHRASE
         );
         res.cookie('tokenn', accessToken,{
-            // maxAge: 60*60*24*3,
-            // expires works the same as the maxAge
             expires: new Date('8 12 2023'),
-
-            //CHANGE TO TRUE THAT IS WHAT IT SHULD BE I THINK
             secure: false,
             httpOnly: true,
             sameSite: 'lax'
